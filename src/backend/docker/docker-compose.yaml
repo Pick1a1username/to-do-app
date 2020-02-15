@@ -18,7 +18,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ../app:/root/app
+      - ../todo-server:/root/app
     
   mongo:
     image: mongo:3.4.23-xenial

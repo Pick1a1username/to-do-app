@@ -28,8 +28,9 @@ export function findAllItems(response: express.Response): null | void {
 
 
 
-export function findItemById(itemId: IItem["id"], response: express.Response): void {
-	TodoItem.findOne({itemId: itemId}, (error, result) => {
+export function findItemById(itemId: IItem["itemId"], response: express.Response): void {
+	// console.log(id);
+	TodoItem.findOne( {itemId: itemId}, (error, result) => {
 		if (error) {
 			console.error(error);
   		  response.writeHead(500,	contentTypePlainText);
@@ -37,6 +38,7 @@ export function findItemById(itemId: IItem["id"], response: express.Response): v
 		} else {
 			if (!result) {
 				if (response != null) {
+					// console.log(result)
 					response.writeHead(404, contentTypePlainText);
 					response.end('Not Found');
 				}
@@ -62,7 +64,7 @@ export function saveItem(request: express.Request, response: express.Response): 
 					response.end(JSON.stringify(request.body));
 				} else {
 					console.log(error);
-					TodoItem.findOne({ id: item.id	},
+					TodoItem.findOne({ itemId: item.itemId	},
 						(error, result) => {
 							console.log('Check if such an item exists');
 							if (error) {
@@ -77,7 +79,7 @@ export function saveItem(request: express.Request, response: express.Response): 
 									response.end(JSON.stringify(request.body));
 								} else {
 									console.log('Updating existing item');
-									result.id = item.id;
+									result.itemId = item.itemId;
 									result.text = item.text;
 									result.completed = item.completed;
 									result.save();
@@ -92,9 +94,9 @@ export function saveItem(request: express.Request, response: express.Response): 
 
 
 export function remove(request: express.Request, response: express.Response) {
-  console.log('Deleting item with id: '	+ request.params.id);
+  console.log('Deleting item with id: '	+ request.params.itemId);
   
-	TodoItem.findOne({itemId: request.params.id}, function(error, data) {
+	TodoItem.findOne({itemId: request.params.itemId}, function(error, data) {
 		if (error) {
 			console.log(error);
 			if (response != null) {
@@ -129,7 +131,7 @@ export function remove(request: express.Request, response: express.Response) {
 
 function toItem(body: IItem) {
 	return new TodoItem({
-		id: body.id,
+		itemId: body.itemId,
 		text: body.text,
 		completed: body.completed
 	});

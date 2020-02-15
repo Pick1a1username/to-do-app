@@ -17,10 +17,10 @@ def main():
     client = MongoClient('mongo', 27017, username='mongoadmin', password='thisispassword')
 
     # Create a db named 'catalog'.
-    db = client['catalog']
+    db = client['todo']
 
     # Create an user for db 'catalog'.
-    db.command("createUser", "catalog_admin", pwd="some_password", roles=["readWrite"])
+    db.command("createUser", "todo_admin", pwd="some_password", roles=["readWrite"])
 
     # Insert documents to collection 'items'.
     items = db['items']

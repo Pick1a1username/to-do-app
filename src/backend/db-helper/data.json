@@ -1,31 +1,17 @@
 [
     {
-        "itemId": "3",
-        "itemName": "Sports Watch 11",
-        "price": 99,
-        "currency": "USD",
-        "categories": [
-            "Watches"
-        ]
+        "itemId": 1,
+        "text": "Get up",
+        "completed": true
     },
     {
-        "itemId": "9",
-        "itemName": "Sports Watch 4",
-        "price": 100,
-        "currency": "EUR",
-        "categories": [
-            "Watches",
-            "Sports Watches"
-        ]
+        "itemId": 2,
+        "text": "Have breackfast",
+        "completed": false
     },
     {
-        "itemId": "2",
-        "itemName": "Sports Watch 2",
-        "price": 100,
-        "currency": "EUR",
-        "categories": [
-            "Watches",
-            "Sports Watches"
-        ]
+        "itemId": 3,
+        "text": "Go to the gym",
+        "completed": false
     }
 ]
