@@ -1,21 +1,3 @@
-// import * as express from "express";
-// import * as url from "url";
-
-// const app = express();
-
-// app.get("/hello", (request, response) => {
-//   const getParams = url.parse(request.url, true).query;
-
-//   if (Object.keys(getParams).length == 0) {
-//     response.end("Hello all");
-//   } else {
-//     response.end("Hello " + getParams.name);
-//   }
-// });
-
-// app.listen(3000);
-
-
 import * as createError from "http-errors";
 import * as express from "express";
 import * as path from "path";
@@ -25,8 +7,7 @@ import * as logger from "morgan";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./static/swagger.json";
 
-import indexRouter from "./routes/index";
-import catalogRouter from "./routes/catalog"
+import catalogRouter from "./routes/todo";
 
 var app = express();
 
@@ -40,10 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 // '/catalog/api-docs' should be before '/catalog'.
-app.use('/catalog/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/catalog', catalogRouter);
+app.use('/todo/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/todo', catalogRouter);
 
 
 
