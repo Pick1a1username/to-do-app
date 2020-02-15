@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-import * as catalog from '../modules/catalog';
+import * as catalog from '../modules/todo';
 
 const router = express.Router();
 
@@ -13,13 +13,6 @@ router.get('/item/:itemId', (request, response, next) => {
   catalog.findItemById(request.params.itemId, response);
 });
 
-
-router.get('/:categoryId', (request, response, next) => {
-  console.log(request.url + ' : querying for ' + request.params.categoryId);
-  catalog.findItemsByCategory(request.params.categoryId, response);
-});
-
-
 router.post('/', (request, response, next) => {
   catalog.saveItem(request, response);
 });
@@ -31,6 +24,5 @@ router.put('/', (request, response, next) => {
 router.delete('/item/:itemId', (request, response, next) => {
   catalog.remove(request, response);
 });
-
 
 export default router;

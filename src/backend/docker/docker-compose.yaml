@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  pymongo:
+    image: pymongo:0.1
+    restart: on-failure
+    volumes:
+      - ../db-helper/db-helper.py:/app/db-helper.py
+      - ../db-helper/data.json:/app/data.json
+    working_dir: /app
+    command: ./db-helper.py
+
+  node:
+    image: node:10-jessie
+    restart: always
+    command: ["tail", "-f", "/dev/null"]
+    ports:
+      - 3000:3000
+    volumes:
+      - ../app:/root/app
+    
+  mongo:
+    image: mongo:3.4.23-xenial
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: thisispassword

@@ -4,21 +4,16 @@ const Schema = mongoose.Schema;
 
 mongoose.connect("mongodb://catalog_admin:some_password@mongo/catalog");
 
-// https://medium.com/@tomanagle/strongly-typed-models-with-mongoose-and-typescript-7bc2f7197722
 export interface IItem extends mongoose.Document {
-    "itemId" : string;
-    "itemName": string;
-    "price": number;
-    "currency" : string;
-    "categories": string[];
+    "id" : string;
+    "text": number;
+    "completed": boolean;
 }
 
 const itemSchema = new Schema ({
-    "itemId" : {type: String, index: {unique: true}},
-    "itemName": String,
-    "price": Number,
-    "currency" : String,
-    "categories": [String]
+    "id" : {type: String, index: {unique: true}},
+    "text": String,
+    "completed" : Boolean
 });
 
-export const CatalogItem = mongoose.model<IItem>('Item', itemSchema);
+export const TodoItem = mongoose.model<IItem>('Item', itemSchema);

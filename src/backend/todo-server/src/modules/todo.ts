@@ -1,25 +1,6 @@
 import * as express from "express";
 
-import { CatalogItem } from '../model/item';
-
-type Item = {
-    itemId: string;
-    itemName: string;
-    price: number;
-    currency: string;
-    categories: string[];
-}
-
-type Category = {
-  categoryName: string;
-  categoryId: string;
-  itemsCount: number;
-  items: Item[]
-}
-
-type Data = {
-    catalog: Category[]
-}
+import { TodoItem, IItem } from '../model/item';
 
 const contentTypeJson = {
   "Content-Type": "application/json"
@@ -29,24 +10,10 @@ const contentTypePlainText = {
   "Content-Type": "application/json"
 };
 
-
-// function readCatalogSync(): Data | undefined {
-//    const file = "./data/catalog.json";
-
-//    if (fs.existsSync(file)) {
-//      const content = fs.readFileSync(file).toString();
-//      const catalog = JSON.parse(content);
-//      return catalog;
-//    }
-
-//    return undefined;
-//  }
-
-
 // This function seems to be inappropriate.
 // It should return something, not mutating a passed variable.
 export function findAllItems(response: express.Response): null | void {
-  CatalogItem.find({}, (error, result) => {
+  TodoItem.find({}, (error, result) => {
     if (error) {
       console.error(error);
       return null;
@@ -61,32 +28,8 @@ export function findAllItems(response: express.Response): null | void {
 
 
 
-export function findItemById(itemId: Item["itemId"], response: express.Response): void {
-	CatalogItem.findOne({itemId: itemId}, (error, result) => {
-		if (error) {
-			console.error(error);
-  		  response.writeHead(500,	contentTypePlainText);
-			return;
-		} else {
-			if (!result) {
-				if (response != null) {
-					response.writeHead(404, contentTypePlainText);
-					response.end('Not Found');
-				}
-				return;
-			}
-
-			if (response != null){
-				response.setHeader('Content-Type', 'application/json');
-				response.send(result);
-			}
-		}
-	});
-}
-
-
-export function findItemsByCategory(category: Category["categoryId"], response: express.Response): void {
-	CatalogItem.find({categories: category}, function(error, result) {
+export function findItemById(itemId: IItem["id"], response: express.Response): void {
+	TodoItem.findOne({itemId: itemId}, (error, result) => {
 		if (error) {
 			console.error(error);
   		  response.writeHead(500,	contentTypePlainText);
@@ -119,7 +62,7 @@ export function saveItem(request: express.Request, response: express.Response): 
 					response.end(JSON.stringify(request.body));
 				} else {
 					console.log(error);
-					CatalogItem.findOne({itemId : item.itemId	},
+					TodoItem.findOne({ id: item.id	},
 						(error, result) => {
 							console.log('Check if such an item exists');
 							if (error) {
@@ -134,11 +77,9 @@ export function saveItem(request: express.Request, response: express.Response): 
 									response.end(JSON.stringify(request.body));
 								} else {
 									console.log('Updating existing item');
-									result.itemId = item.itemId;
-									result.itemName = item.itemName;
-									result.price = item.price;
-									result.currency = item.currency;
-									result.categories = item.categories;
+									result.id = item.id;
+									result.text = item.text;
+									result.completed = item.completed;
 									result.save();
 									response.writeHead(200, contentTypeJson);
 									response.end(JSON.stringify(request.body));
@@ -151,9 +92,9 @@ export function saveItem(request: express.Request, response: express.Response): 
 
 
 export function remove(request: express.Request, response: express.Response) {
-  console.log('Deleting item with id: '	+ request.params.itemId);
+  console.log('Deleting item with id: '	+ request.params.id);
   
-	CatalogItem.findOne({itemId: request.params.itemId}, function(error, data) {
+	TodoItem.findOne({itemId: request.params.id}, function(error, data) {
 		if (error) {
 			console.log(error);
 			if (response != null) {
@@ -186,12 +127,10 @@ export function remove(request: express.Request, response: express.Response) {
 	});
 }
 
-function toItem(body: Item) {
-	return new CatalogItem({
-		itemId: body.itemId,
-		itemName: body.itemName,
-		price: body.price,
-		currency: body.currency,
-		categories: body.categories
+function toItem(body: IItem) {
+	return new TodoItem({
+		id: body.id,
+		text: body.text,
+		completed: body.completed
 	});
 }
