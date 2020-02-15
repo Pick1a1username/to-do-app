@@ -94,7 +94,7 @@ export function saveItem(request: express.Request, response: express.Response): 
 
 
 export function remove(request: express.Request, response: express.Response) {
-  console.log('Deleting item with id: '	+ request.params.itemId);
+    console.log('Deleting item with id: '	+ request.params.itemId);
   
 	TodoItem.findOne({itemId: request.params.itemId}, function(error, data) {
 		if (error) {
