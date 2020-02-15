@@ -56,7 +56,7 @@ export function findItemById(itemId: IItem["itemId"], response: express.Response
 
 // Need to be improved.
 export function saveItem(request: express.Request, response: express.Response): void {
-	const item = toItem(request.body);
+	const item = toItem( request.body );
 	item.save((error) => {
 				if (!error) {
 					item.save();
