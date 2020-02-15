@@ -1,0 +1,41 @@
+{"catalog" : [{
+    "categoryName" : "Watches",
+    "categoryId" : "1",
+    "itemsCount" : 2,
+    "items" : [{
+            "itemId" : "item-identifier-1",
+            "itemName":"Sports Watch",
+            "price": 150,
+            "currency" : "EUR"
+        },
+        {
+             "itemId" : "item-identifier-2",
+             "itemName":"Waterproof Sports Watch",
+             "price": 180,
+             "currency" : "EUR"
+       }]
+    },
+    {
+    "categoryName" : "Cars",
+    "categoryId" : "2",
+    "itemsCount" : 3,
+    "items" : [{
+            "itemId" : "item-identifier-1",
+            "itemName":"Volkswagen Polo",
+            "price": 150000,
+            "currency" : "EUR"
+        },
+        {
+             "itemId" : "item-identifier-2",
+             "itemName":"Skoda Fabia",
+             "price": 180000,
+             "currency" : "EUR"
+        },
+        {
+            "itemId" : "item-identifier-3",
+            "itemName":"Subaru Impreza",
+            "price": 100000,
+            "currency" : "EUR"
+        }]
+}]
+}
