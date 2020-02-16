@@ -16,14 +16,22 @@ interface OwnProps {
 
 type Props = OwnProps & VisibleTodoListHandler
 
+class TodoList extends React.Component<Props> {
 
-const TodoList: React.FC<Props> = ({ todos, onTodoClick }) => (
-  <ul>
-    {todos.map((todo, index) => (
-      <Todo key={index} {...todo} onClick={() => onTodoClick(index) } />
-    ))}
-  </ul>
-)
 
+  componentDidMount() {
+    this.props.loadTodos();
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.props.todos.map((todo, index) => (
+          <Todo key={index} {...todo} onClick={() => this.props.onTodoClick(todo.id) } />
+        ))}
+      </ul>
+    )
+  }
+}
 
 export default TodoList

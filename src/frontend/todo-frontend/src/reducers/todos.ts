@@ -1,5 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { addTodo, toggleTodo } from '../actions'
+import { addTodo, toggleTodo, loadTodos } from '../actions'
 
 type Todo = {
     id: number,
@@ -27,5 +27,16 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
     .case(toggleTodo, (state, id) => {
         return state.map(todo =>
             todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+    })
+    .case(loadTodos, (state) => {
+        console.log("loadTodos() triggered");
+        // return state
+        return [
+            {
+                id: 1000,
+                text: "test",
+                completed: true
+            }
+        ]
     })
 

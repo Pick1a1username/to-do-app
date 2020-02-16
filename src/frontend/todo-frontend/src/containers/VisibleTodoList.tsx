@@ -4,7 +4,7 @@ import TodoList from '../components/TodoList'
 import { Dispatch } from "redux";
 
 import { AppState } from "../store";
-import { toggleTodo } from '../actions'
+import { toggleTodo, loadTodos } from '../actions'
 
 type Todo = {
   id: number,
@@ -27,7 +27,8 @@ const getVisibleTodos = (todos: Todo[], filter: string) => {
 }
 
 export interface VisibleTodoListHandler {
-  onTodoClick(id: number): void
+  onTodoClick(id: number): void;
+  loadTodos(): void
 }
 
 const mapStateToProps = (appState: AppState) => {
@@ -38,7 +39,8 @@ const mapStateToProps = (appState: AppState) => {
 
 const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
-    onTodoClick: (id: number) => { dispatch(toggleTodo(id)) }
+    onTodoClick: (id: number) => { dispatch(toggleTodo(id)) },
+    loadTodos: () => { dispatch(loadTodos())}
   }
 }
 
