@@ -17,7 +17,21 @@ type TodoFromDB = {
   text: string,
   completed: boolean
 }
-export const addTodo = actionCreator<string>('ADD_TODO')
+// export const addTodo = actionCreator<string>('ADD_TODO')
+
+const addTodo = actionCreator.async<{}, TodoFromDB, {}>('ADD_TODO')
+
+export interface AddTodoAsyncActions {
+  startAddTodo: ActionCreator<{}>;
+  failedAddTodo: ActionCreator<Failure<{}, {}>>;
+  doneAddTodo: ActionCreator<Success<{}, TodoFromDB>>;
+}
+
+export const AddTodoAsyncActions = {
+  startAddTodo: addTodo.started,
+  failedAddTodo: addTodo.failed,
+  doneAddTodo: addTodo.done
+}
 
 const toggleTodo = actionCreator.async<{}, TodoFromDB, {}>('TOGGLE_TODO')
 

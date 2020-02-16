@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { addTodo } from '../actions'
+import { AddTodoAsyncActions } from '../actions'
 import TodoInput from '../components/TodoInput'
 import { AppState } from "../store";
 
@@ -13,9 +13,36 @@ const mapStateToProps = (appState: AppState) => {
   return {}
 }
 
+type TodoFromDB = {
+  itemId: number,
+  text: string,
+  completed: boolean
+}
+
+
 const mapDispatchToProps = ( dispatch: Dispatch) => {
   return {
-    addTodo: (value: string) => { dispatch(addTodo(value)) }
+    // addTodo: (value: string) => { dispatch(addTodo(value)) },
+    addTodo: (value: string) => {
+      dispatch(AddTodoAsyncActions.startAddTodo({}));
+      
+      fetch(`http://localhost:3000/todo/`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          text: value
+        })
+      })
+        .then( (response) => response.json() )
+        .then( (data: TodoFromDB) => {
+          dispatch(AddTodoAsyncActions.doneAddTodo({ params: {}, result: data }));
+        })
+        .catch( (error) => {
+          dispatch(AddTodoAsyncActions.failedAddTodo({ params: {}, error: {} }));
+        });
+    },
   }
 }
 
