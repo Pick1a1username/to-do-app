@@ -4,7 +4,7 @@ import TodoList from '../components/TodoList'
 import { Dispatch } from "redux";
 
 import { AppState } from "../store";
-import { toggleTodo, LoadTodosAsyncActions } from '../actions'
+import { ToggleTodoAsyncActions, LoadTodosAsyncActions } from '../actions'
 
 type Todo = {
   id: number,
@@ -27,7 +27,7 @@ const getVisibleTodos = (todos: Todo[], filter: string) => {
 }
 
 export interface VisibleTodoListHandler {
-  onTodoClick(id: number): void;
+  onTodoClick(todo: Todo): void;
   loadTodos(): void
 }
 
@@ -36,10 +36,36 @@ const mapStateToProps = (appState: AppState) => {
     todos: getVisibleTodos(appState.todosReducer, appState.visibilityFilterReducer)
   }
 }
-
+type TodoFromDB = {
+  itemId: number,
+  text: string,
+  completed: boolean
+}
 const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
-    onTodoClick: (id: number) => { dispatch(toggleTodo(id)) },
+    // onTodoClick: (id: number) => { dispatch(toggleTodo(id)) },
+    onTodoClick: (todo: Todo) => {
+      dispatch(ToggleTodoAsyncActions.startToggleTodo({}));
+
+      fetch(`http://localhost:3000/todo/`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          itemId: todo.id,
+          text: todo.text,
+          completed: todo.completed ? false : true
+        })
+      })
+        .then( (response) => response.json() )
+        .then( (data: TodoFromDB) => {
+          dispatch(ToggleTodoAsyncActions.doneToggleTodo({ params: {}, result: data }));
+        })
+        .catch( (error) => {
+          dispatch(ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} }));
+        });
+    },
     loadTodos: () => { 
       dispatch(LoadTodosAsyncActions.startLoadTodos({}))
     

@@ -1,5 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { addTodo, toggleTodo, LoadTodosAsyncActions } from '../actions'
+import { addTodo, ToggleTodoAsyncActions , LoadTodosAsyncActions } from '../actions'
 
 type Todo = {
     id: number,
@@ -32,9 +32,19 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
             }
         ]   
     })
-    .case(toggleTodo, (state, id) => {
+    // .case(toggleTodo, (state, id) => {
+    //     return state.map(todo =>
+    //         todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+    // })
+    .case(ToggleTodoAsyncActions.startToggleTodo, (state) => {
+        return state
+    })
+    .case(ToggleTodoAsyncActions.failedToggleTodo, (state) => {
+        return state
+    })
+    .case(ToggleTodoAsyncActions.doneToggleTodo, (state, { result }) => {
         return state.map(todo =>
-            todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+            todo.id === result.itemId ? { ...todo, completed: !todo.completed } : todo)
     })
     .case(LoadTodosAsyncActions.startLoadTodos, (state) => {
         return state

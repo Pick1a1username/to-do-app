@@ -12,9 +12,28 @@ const actionCreator = actionCreatorFactory()
 //   text
 // })
 
+type TodoFromDB = {
+  itemId: number,
+  text: string,
+  completed: boolean
+}
 export const addTodo = actionCreator<string>('ADD_TODO')
 
-export const toggleTodo = actionCreator<number>('TOGGLE_TODO')
+const toggleTodo = actionCreator.async<{}, TodoFromDB, {}>('TOGGLE_TODO')
+
+export interface ToggleTodoAsyncActions {
+  startToggleTodo: ActionCreator<{}>;
+  failedToggleTodo: ActionCreator<Failure<{}, {}>>;
+  doneToggleTodo: ActionCreator<Success<{}, TodoFromDB>>;
+}
+
+export const ToggleTodoAsyncActions = {
+  startToggleTodo: toggleTodo.started,
+  failedToggleTodo: toggleTodo.failed,
+  doneToggleTodo: toggleTodo.done
+}
+
+// export const toggleTodo = actionCreator<number>('TOGGLE_TODO')
 
 export const setVisibilityFilter = actionCreator<string>('SET_VISIBILITY_FILTER')
 
