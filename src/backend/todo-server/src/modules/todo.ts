@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as uuidv1 from "uuid/v1";
 
 import { TodoItem, IItem } from '../model/item';
 
@@ -60,10 +61,11 @@ export function saveItem(request: express.Request, response: express.Response): 
 
 	if (!request.body.itemId) {
 		console.log('Item should not exist. Creating a new one');
-				// Todo
-		// Consider concurrency. getNewId() may work unexpectedly when it is requested concurrently.
+
+		// Todo
+		// Consider concurrency. uuid() may not work expectedly when it is requested concurrently.
 		const newItemData: IItem = {
-			itemId: getNewId(),
+			itemId: uuidv1(),
 			text: request.body.text as string,
 			completed: false,
 		} as IItem;
@@ -94,7 +96,7 @@ export function saveItem(request: express.Request, response: express.Response): 
 									// Todo
 									// Consider concurrency. getNewId() may work unexpectedly when it is requested concurrently.
 									const newItemData: IItem = {
-										itemId: getNewId(),
+										itemId: uuidv1(),
 										text: request.body.text as string,
 										completed: false,
 									} as IItem;
@@ -161,15 +163,4 @@ function toItem(body: IItem) {
 		text: body.text,
 		completed: body.completed
 	});
-}
-
-function getNewId(): number {
-	let maxId: number;
-	TodoItem.find({})
-		.sort({"itemId" : -1})
-		.limit(1)
-		.exec(function(err, doc){
-			maxId = doc[0].itemId;
-		 })
-	return maxId
 }

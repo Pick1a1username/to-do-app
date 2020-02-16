@@ -10,7 +10,7 @@ router.get('/', (request, response, next) => {
 
 router.get('/:itemId', (request, response, next) => {
   console.log(request.url + ' : querying for ' + request.params.itemId);
-  todo.findItemById(parseInt(request.params.itemId), response);
+  todo.findItemById(request.params.itemId, response);
 });
 
 router.post('/', (request, response, next) => {
