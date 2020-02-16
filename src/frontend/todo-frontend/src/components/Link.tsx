@@ -25,10 +25,4 @@ const Link: React.FC<Props> = ({ active, children, onClick }) => {
     </a>
   )
 }
-// Link.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   children: PropTypes.node.isRequired,
-//   onClick: PropTypes.func.isRequired
-// }
-
 export default Link

@@ -7,7 +7,7 @@ import { AppState } from "../store";
 import { ToggleTodoAsyncActions, LoadTodosAsyncActions } from '../actions'
 
 type Todo = {
-  id: number,
+  id: string,
   text: string,
   completed: boolean
 }
@@ -37,7 +37,7 @@ const mapStateToProps = (appState: AppState) => {
   }
 }
 type TodoFromDB = {
-  itemId: number,
+  itemId: string,
   text: string,
   completed: boolean
 }

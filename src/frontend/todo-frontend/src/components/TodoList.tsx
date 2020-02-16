@@ -5,7 +5,7 @@ import Todo from './Todo'
 import { VisibleTodoListHandler } from '../containers/VisibleTodoList'
 
 type Todo = {
-  id: number,
+  id: string,
   text: string,
   completed: boolean
 }

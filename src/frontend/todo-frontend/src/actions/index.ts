@@ -13,7 +13,7 @@ const actionCreator = actionCreatorFactory()
 // })
 
 type TodoFromDB = {
-  itemId: number,
+  itemId: string,
   text: string,
   completed: boolean
 }

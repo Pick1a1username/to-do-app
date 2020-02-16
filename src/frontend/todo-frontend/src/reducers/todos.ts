@@ -2,14 +2,14 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { AddTodoAsyncActions, ToggleTodoAsyncActions , LoadTodosAsyncActions } from '../actions'
 
 type Todo = {
-    id: number,
+    id: string,
     text: string,
     completed: boolean
 }
 
 type TodoFromDB = {
     _id: string,
-    itemId: number,
+    itemId: string,
     text: string,
     completed: boolean
 }
@@ -42,7 +42,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result)
         return [
             ...state,
-            { id: result.itemId as number, text: result.text as string, completed: result.completed as boolean}
+            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean}
         ]   
     })
     // .case(toggleTodo, (state, id) => {
@@ -69,7 +69,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result);
         if ( result.length > 0 ) {
             let resultModified = result.map( (todo: TodoFromDB) => {
-                    return { id: todo.itemId as number, text: todo.text as string, completed: todo.completed as boolean}
+                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean}
                 });
             return resultModified;
         }

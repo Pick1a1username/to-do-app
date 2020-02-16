@@ -14,7 +14,7 @@ const mapStateToProps = (appState: AppState) => {
 }
 
 type TodoFromDB = {
-  itemId: number,
+  itemId: string,
   text: string,
   completed: boolean
 }
