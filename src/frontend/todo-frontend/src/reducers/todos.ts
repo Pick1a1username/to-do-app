@@ -4,7 +4,8 @@ import { AddTodoAsyncActions, ToggleTodoAsyncActions , LoadTodosAsyncActions } f
 type Todo = {
     id: string,
     text: string,
-    completed: boolean
+    completed: boolean,
+    pending: boolean
 }
 
 type TodoFromDB = {
@@ -42,7 +43,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result)
         return [
             ...state,
-            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean}
+            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean, pending: false }
         ]   
     })
     // .case(toggleTodo, (state, id) => {
@@ -69,7 +70,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result);
         if ( result.length > 0 ) {
             let resultModified = result.map( (todo: TodoFromDB) => {
-                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean}
+                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean, pending: false}
                 });
             return resultModified;
         }

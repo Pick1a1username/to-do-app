@@ -9,7 +9,8 @@ import { ToggleTodoAsyncActions, LoadTodosAsyncActions } from '../actions'
 type Todo = {
   id: string,
   text: string,
-  completed: boolean
+  completed: boolean,
+  pending: boolean,
 }
 
 const getVisibleTodos = (todos: Todo[], filter: string) => {
@@ -43,7 +44,6 @@ type TodoFromDB = {
 }
 const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
-    // onTodoClick: (id: number) => { dispatch(toggleTodo(id)) },
     onTodoClick: (todo: Todo) => {
       dispatch(ToggleTodoAsyncActions.startToggleTodo({}));
 

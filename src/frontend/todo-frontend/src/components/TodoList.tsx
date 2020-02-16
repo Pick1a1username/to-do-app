@@ -7,7 +7,8 @@ import { VisibleTodoListHandler } from '../containers/VisibleTodoList'
 type Todo = {
   id: string,
   text: string,
-  completed: boolean
+  completed: boolean,
+  pending: boolean
 }
 
 interface OwnProps {
