@@ -4,7 +4,7 @@ import TodoList from '../components/TodoList'
 import { Dispatch } from "redux";
 
 import { AppState } from "../store";
-import { toggleTodo, loadTodos } from '../actions'
+import { toggleTodo, LoadTodosAsyncActions } from '../actions'
 
 type Todo = {
   id: number,
@@ -40,8 +40,30 @@ const mapStateToProps = (appState: AppState) => {
 const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
     onTodoClick: (id: number) => { dispatch(toggleTodo(id)) },
-    loadTodos: () => { dispatch(loadTodos())}
-  }
+    loadTodos: () => { 
+      dispatch(LoadTodosAsyncActions.startLoadTodos({}))
+    
+      // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
+      fetch("http://localhost:3000/todo", {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then( (response) => {
+          console.log(response)
+          return response.json()
+        })
+        .then( (todos) => {
+          console.log(todos)
+          dispatch(LoadTodosAsyncActions.doneLoadTodos({ params: {}, result: todos }))
+        })
+        .catch( (error) => {
+          console.error("loadTodos() failed")
+          console.error(error)
+          dispatch(LoadTodosAsyncActions.failedLoadTodos({ params: {}, error: {}}))
+        })
+      }
+    }
 }
 
 

@@ -1,4 +1,4 @@
-import { actionCreatorFactory } from 'typescript-fsa';
+import { actionCreatorFactory, ActionCreator, Success, Failure  } from 'typescript-fsa';
 
 const actionCreator = actionCreatorFactory()
 
@@ -24,4 +24,17 @@ export const VisibilityFilters = {
     SHOW_ACTIVE: 'SHOW_ACTIVE'
   }
 
-export const loadTodos = actionCreator('LOAD_TODOS')
+  
+const loadTodos = actionCreator.async<{}, {}, {}>('LOAD_TODOS')
+
+export interface LoadTodosAsyncActions {
+  startLoadTodos: ActionCreator<{}>;
+  failedLoadTodos: ActionCreator<Failure<{}, {}>>;
+  doneLoadTodos: ActionCreator<Success<{}, {}>>;
+}
+
+export const LoadTodosAsyncActions = {
+  startLoadTodos: loadTodos.started,
+  failedLoadTodos: loadTodos.failed,
+  doneLoadTodos: loadTodos.done
+}
