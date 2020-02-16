@@ -10,7 +10,7 @@ type Todo = {
   id: string,
   text: string,
   completed: boolean,
-  pending: boolean,
+  available: boolean,
 }
 
 const getVisibleTodos = (todos: Todo[], filter: string) => {

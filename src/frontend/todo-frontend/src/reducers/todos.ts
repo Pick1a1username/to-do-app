@@ -5,7 +5,7 @@ type Todo = {
     id: string,
     text: string,
     completed: boolean,
-    pending: boolean
+    available: boolean
 }
 
 type TodoFromDB = {
@@ -43,7 +43,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result)
         return [
             ...state,
-            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean, pending: false }
+            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean, available: false }
         ]   
     })
     // .case(toggleTodo, (state, id) => {
@@ -70,7 +70,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result);
         if ( result.length > 0 ) {
             let resultModified = result.map( (todo: TodoFromDB) => {
-                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean, pending: false}
+                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean, available: false}
                 });
             return resultModified;
         }

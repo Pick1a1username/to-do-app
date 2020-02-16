@@ -8,7 +8,7 @@ type Todo = {
   id: string,
   text: string,
   completed: boolean,
-  pending: boolean
+  available: boolean
 }
 
 interface OwnProps {

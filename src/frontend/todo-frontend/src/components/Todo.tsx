@@ -5,7 +5,7 @@ import React from 'react'
 interface OwnProps {
     text: string,
     completed: boolean,
-    pending: boolean
+    available: boolean
 }
 
 export interface VisibleTodoListHandler {
@@ -14,7 +14,7 @@ export interface VisibleTodoListHandler {
 
 type Props = OwnProps & VisibleTodoListHandler
 
-const Todo: React.FC<Props> = ({ text, completed, pending, onClick }) => (
+const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
   <li
     onClick={onClick}
     style={{
