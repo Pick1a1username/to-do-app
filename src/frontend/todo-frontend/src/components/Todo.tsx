@@ -17,11 +17,15 @@ type Props = OwnProps & VisibleTodoListHandler
 const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
   <li
     onClick={onClick}
-    style={{
-    textDecoration: completed ? 'line-through' : 'none'
-  }}
   >
-    {text}
+    <span
+          style={{
+            textDecoration: completed ? 'line-through' : 'none',
+            color: available ? 'black' : 'red'
+          }}
+    >{text}
+    </span>
+    <span>{available ? '' : '(Saving...)'}</span>
   </li>
 )
 

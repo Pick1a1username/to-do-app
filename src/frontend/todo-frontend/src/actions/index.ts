@@ -2,15 +2,6 @@ import { actionCreatorFactory, ActionCreator, Success, Failure  } from 'typescri
 
 const actionCreator = actionCreatorFactory()
 
-// id cannot be set in this code....
-// So it is moved to the reducer.
-// let nextTodoId = 0
-
-// export const addTodo = text => ({
-//   type: 'ADD_TODO',
-//   id: nextTodoId++,
-//   text
-// })
 
 type TodoFromDB = {
   itemId: string,
@@ -36,7 +27,7 @@ export const AddTodoAsyncActions = {
 const toggleTodo = actionCreator.async<{}, TodoFromDB, {}>('TOGGLE_TODO')
 
 export interface ToggleTodoAsyncActions {
-  startToggleTodo: ActionCreator<{}>;
+  startToggleTodo: ActionCreator<string>;
   failedToggleTodo: ActionCreator<Failure<{}, {}>>;
   doneToggleTodo: ActionCreator<Success<{}, TodoFromDB>>;
 }

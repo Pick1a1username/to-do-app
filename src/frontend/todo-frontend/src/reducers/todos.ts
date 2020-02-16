@@ -50,15 +50,16 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
     //     return state.map(todo =>
     //         todo.id === id ? { ...todo, completed: !todo.completed } : todo)
     // })
-    .case(ToggleTodoAsyncActions.startToggleTodo, (state) => {
-        return state
+    .case(ToggleTodoAsyncActions.startToggleTodo, (state, id) => {
+        return state.map(todo =>
+            todo.id === id ? { ...todo, available: false } : todo)
     })
     .case(ToggleTodoAsyncActions.failedToggleTodo, (state) => {
         return state
     })
     .case(ToggleTodoAsyncActions.doneToggleTodo, (state, { result }) => {
         return state.map(todo =>
-            todo.id === result.itemId ? { ...todo, completed: !todo.completed } : todo)
+            todo.id === result.itemId ? { ...todo, completed: !todo.completed, available: true } : todo)
     })
     .case(LoadTodosAsyncActions.startLoadTodos, (state) => {
         return state
@@ -70,7 +71,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result);
         if ( result.length > 0 ) {
             let resultModified = result.map( (todo: TodoFromDB) => {
-                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean, available: false}
+                    return { id: todo.itemId as string, text: todo.text as string, completed: todo.completed as boolean, available: true}
                 });
             return resultModified;
         }

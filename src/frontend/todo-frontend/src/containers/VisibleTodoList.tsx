@@ -45,7 +45,9 @@ type TodoFromDB = {
 const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
     onTodoClick: (todo: Todo) => {
-      dispatch(ToggleTodoAsyncActions.startToggleTodo({}));
+      if (!todo.available) return;
+
+      dispatch(ToggleTodoAsyncActions.startToggleTodo(todo.id));
 
       fetch(`http://localhost:3000/todo/`, {
         headers: {
