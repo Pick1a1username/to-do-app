@@ -7,6 +7,14 @@ type Todo = {
     completed: boolean
 }
 
+type TodoFromDB = {
+    _id: string,
+    itemId: number,
+    text: string,
+    completed: boolean
+}
+
+
 let nextTodoId = 0
 
 export interface todosReducerState extends Array<Todo> { }
@@ -34,7 +42,15 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
     .case(LoadTodosAsyncActions.failedLoadTodos, (state) => {
         return state
     })
-    .case(LoadTodosAsyncActions.doneLoadTodos, (state) => {
+    .case(LoadTodosAsyncActions.doneLoadTodos, (state, { result }) => {
+        console.log(result);
+        if ( result.length > 0 ) {
+            let resultModified = result.map( (todo: TodoFromDB) => {
+                    return { id: todo.itemId as number, text: todo.text as string, completed: todo.completed as boolean}
+                });
+            return resultModified;
+        }
+
         return state
     })
 

@@ -50,15 +50,14 @@ const mapDispatchToProps = ( dispatch: Dispatch ) => {
         }
       })
         .then( (response) => {
-          console.log(response)
+          // console.log(response)
           return response.json()
         })
         .then( (todos) => {
-          console.log(todos)
+          // console.log(todos)
           dispatch(LoadTodosAsyncActions.doneLoadTodos({ params: {}, result: todos }))
         })
         .catch( (error) => {
-          console.error("loadTodos() failed")
           console.error(error)
           dispatch(LoadTodosAsyncActions.failedLoadTodos({ params: {}, error: {}}))
         })

@@ -3,6 +3,7 @@ import * as express from "express";
 import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
+// https://stackoverflow.com/questions/36840396/fetch-gives-an-empty-response-body
 import * as cors from "cors";
 
 import * as swaggerUi from "swagger-ui-express";

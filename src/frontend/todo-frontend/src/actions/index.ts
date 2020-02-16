@@ -25,12 +25,13 @@ export const VisibilityFilters = {
   }
 
   
-const loadTodos = actionCreator.async<{}, {}, {}>('LOAD_TODOS')
+// https://qiita.com/IzumiSy/items/b7d8a96eacd2cd8ad510#%E7%99%BA%E5%B1%95%E7%B7%A8%E9%9D%9E%E5%90%8C%E6%9C%9F%E5%87%A6%E7%90%86%E3%81%97%E3%81%9F%E3%81%84
+const loadTodos = actionCreator.async<{}, [], {}>('LOAD_TODOS')
 
 export interface LoadTodosAsyncActions {
   startLoadTodos: ActionCreator<{}>;
   failedLoadTodos: ActionCreator<Failure<{}, {}>>;
-  doneLoadTodos: ActionCreator<Success<{}, {}>>;
+  doneLoadTodos: ActionCreator<Success<{}, []>>;
 }
 
 export const LoadTodosAsyncActions = {
