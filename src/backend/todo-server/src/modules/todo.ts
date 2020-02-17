@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as uuidv1 from "uuid/v1";
 
 import { TodoItem, IItem } from '../model/item';
 
@@ -57,13 +58,31 @@ export function findItemById(itemId: IItem["itemId"], response: express.Response
 // Need to be improved.
 export function saveItem(request: express.Request, response: express.Response): void {
 	const item = toItem( request.body );
+
+	if (!request.body.itemId) {
+		console.log('Item should not exist. Creating a new one');
+
+		// Todo
+		// Consider concurrency. uuid() may not work expectedly when it is requested concurrently.
+		const newItemData: IItem = {
+			itemId: uuidv1(),
+			text: request.body.text as string,
+			completed: false,
+		} as IItem;
+		console.log(newItemData);
+		let newItem = toItem(newItemData);
+		newItem.save();
+		response.writeHead(201, contentTypeJson);
+		response.end(JSON.stringify(newItemData));
+		return
+	}
 	item.save((error) => {
 				if (!error) {
 					item.save();
 					response.writeHead(201, contentTypeJson);
 					response.end(JSON.stringify(request.body));
 				} else {
-					console.log(error);
+					// console.log(error);
 					TodoItem.findOne({ itemId: item.itemId	},
 						(error, result) => {
 							console.log('Check if such an item exists');
@@ -74,9 +93,18 @@ export function saveItem(request: express.Request, response: express.Response): 
 							} else {
 								if (!result) {
 									console.log('Item does not exist. Creating a new one');
-									item.save();
+									// Todo
+									// Consider concurrency. getNewId() may work unexpectedly when it is requested concurrently.
+									const newItemData: IItem = {
+										itemId: uuidv1(),
+										text: request.body.text as string,
+										completed: false,
+									} as IItem;
+									console.log(newItemData);
+									let newItem = toItem(newItemData);
+									newItem.save();
 									response.writeHead(201, contentTypeJson);
-									response.end(JSON.stringify(request.body));
+									response.end(JSON.stringify(newItemData));
 								} else {
 									console.log('Updating existing item');
 									result.itemId = item.itemId;

@@ -3,6 +3,8 @@ import * as express from "express";
 import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
+// https://stackoverflow.com/questions/36840396/fetch-gives-an-empty-response-body
+import * as cors from "cors";
 
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./static/swagger.json";
@@ -20,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 // '/catalog/api-docs' should be before '/catalog'.
 app.use('/todo/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

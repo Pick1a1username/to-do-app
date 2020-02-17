@@ -1,16 +1,16 @@
 [
     {
-        "itemId": "1",
+        "itemId": 1,
         "text": "Get up",
         "completed": true
     },
     {
-        "itemId": "2",
+        "itemId": 2,
         "text": "Have breackfast",
         "completed": false
     },
     {
-        "itemId": "3",
+        "itemId": 3,
         "text": "Go to the gym",
         "completed": false
     }

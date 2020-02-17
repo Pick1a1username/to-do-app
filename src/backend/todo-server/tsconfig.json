@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": "./",
         "outDir": "./dist",
         "sourceMap": true,
         "module": "commonjs",
@@ -8,8 +9,12 @@
         "removeComments": true,
         "resolveJsonModule": true,
         // "esModuleInterop": true,
-    },
+    },  
     "include": [
         "./src/**/*"
+    ],
+    "exclude": [
+        "src/static/"
     ]
+    
 }

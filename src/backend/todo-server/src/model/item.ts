@@ -5,13 +5,13 @@ const Schema = mongoose.Schema;
 mongoose.connect("mongodb://todo_admin:some_password@mongo/todo");
 
 export interface IItem extends mongoose.Document {
-    "itemId" : number;
+    "itemId" : string;
     "text": string;
     "completed": boolean;
 }
 
 const itemSchema = new Schema ({
-    "itemId" : {type: Number, index: {unique: true}},
+    "itemId" : {type: String, index: {unique: true}},
     "text": String,
     "completed" : Boolean
 });
