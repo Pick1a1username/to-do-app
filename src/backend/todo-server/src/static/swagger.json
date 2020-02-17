@@ -5,10 +5,10 @@
     "version": "v1"
   },
   "paths": {
-    "/catalog": {
+    "/todo": {
       "get": {
-        "operationId": "retrieveAllCategories",
-        "summary": "Retrieves all available categories in the catalog ",
+        "operationId": "retrieveAllItems",
+        "summary": "Retrieves all items",
         "produces": [
           "application/json"
         ],
@@ -18,27 +18,24 @@
             "examples": {
               "application/json": [
                 {
-                  "categories": [
-                    "Watches"
-                  ],
-                  "_id": "5e2a45c2a55e70a2b32c03ce",
-                  "itemId": "3",
-                  "itemName": "Sports Watch 11",
-                  "price": 99,
-                  "currency": "USD"
+                  "_id": "5e4a961b0a6b8343bcb5f419",
+                  "itemId": "1",
+                  "text": "Get up",
+                  "completed": true
                 },
                 {
-                  "categories": [
-                    "Watches",
-                    "Sports Watches"
-                  ],
-                  "_id": "5e2a45c2a55e70a2b32c03cf",
-                  "itemId": "9",
-                  "itemName": "Sports Watch 4",
-                  "price": 100,
-                  "currency": "EUR"
+                  "_id": "5e4a961b0a6b8343bcb5f41a",
+                  "itemId": "2",
+                  "text": "Have breackfast",
+                  "completed": false
+                },
+                {
+                  "_id": "5e4a961b0a6b8343bcb5f41b",
+                  "itemId": "3",
+                  "text": "Go to the gym",
+                  "completed": false
                 }
-              ]
+              ]              
             }
           },
           "404": {
@@ -55,41 +52,10 @@
         "parameters": [
           {
             "in": "query",
-            "name": "itemId",
+            "name": "text",
             "required": true,
             "type": "string",
-            "description": "Item's ID"
-          },
-          {
-            "in": "query",
-            "name": "itemName",
-            "required": true,
-            "type": "string",
-            "description": "Item's Name"
-          },
-          {
-            "in": "query",
-            "name": "price",
-            "required": true,
-            "type": "number",
-            "description": "Item's Price"
-          },
-          {
-            "in": "query",
-            "name": "currency",
-            "required": true,
-            "type": "string",
-            "description": "Item's Currency"
-          },
-          {
-            "in": "query",
-            "name": "categories",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Item's categories"
+            "description": "Item's description"
           }
         ],
         "produces": [
@@ -99,31 +65,21 @@
           "200": {
             "description": "200 if the item has been updated",
             "examples": {
-              "application/json": { 
-                "itemId" : 23,
-                "itemName" : "Sports Watch 10",
-                "price" : "100",
-                "currency" : "USD",
-                "categories" : [ 
-                   "Watches",
-                   "Sports Watches"
-                ]
-              }
+              "application/json": {
+                "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
+                "text": "new todo 1",
+                "completed": false
+              }              
             }
           },
           "201": {
             "description": "200 if the item has been created",
             "examples": {
-              "application/json": { 
-                "itemId" : 23,
-                "itemName" : "Sports Watch 10",
-                "price" : "100",
-                "currency" : "USD",
-                "categories" : [ 
-                   "Watches",
-                   "Sports Watches"
-                ]
-              }
+              "application/json": {
+                "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
+                "text": "new todo 1",
+                "completed": false
+              }              
             }
           },
           "404": {
@@ -140,41 +96,10 @@
         "parameters": [
           {
             "in": "query",
-            "name": "itemId",
+            "name": "text",
             "required": true,
             "type": "string",
-            "description": "Item's ID"
-          },
-          {
-            "in": "query",
-            "name": "itemName",
-            "required": true,
-            "type": "string",
-            "description": "Item's Name"
-          },
-          {
-            "in": "query",
-            "name": "price",
-            "required": true,
-            "type": "number",
-            "description": "Item's Price"
-          },
-          {
-            "in": "query",
-            "name": "currency",
-            "required": true,
-            "type": "string",
-            "description": "Item's Currency"
-          },
-          {
-            "in": "query",
-            "name": "categories",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Item's categories"
+            "description": "Item's description"
           }
         ],
         "produces": [
@@ -184,31 +109,21 @@
           "200": {
             "description": "200 if the item has been updated",
             "examples": {
-              "application/json": { 
-                "itemId" : 23,
-                "itemName" : "Sports Watch 10",
-                "price" : "100",
-                "currency" : "USD",
-                "categories" : [ 
-                   "Watches",
-                   "Sports Watches"
-                ]
-              }
+              "application/json": {
+                "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
+                "text": "new todo 1",
+                "completed": false
+              }              
             }
           },
           "201": {
             "description": "200 if the item has been created",
             "examples": {
-              "application/json": { 
-                "itemId" : 23,
-                "itemName" : "Sports Watch 10",
-                "price" : "100",
-                "currency" : "USD",
-                "categories" : [ 
-                   "Watches",
-                   "Sports Watches"
-                ]
-              }
+              "application/json": {
+                "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
+                "text": "new todo 1",
+                "completed": false
+              }              
             }
           },
           "404": {
@@ -220,62 +135,7 @@
         }
       }
     },
-    "/catalog/{categoryName}": {
-      "get": {
-        "operationId": "retrieveAllItemsByCategory",
-        "summary": "Retrieves all the items available under a specific category ",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "categoryName",
-            "required": true,
-            "type": "string",
-            "description": "Category's name"
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 OK",
-            "examples": {
-              "application/json": [
-                {
-                  "categories": [
-                    "Watches",
-                    "Sports Watches"
-                  ],
-                  "_id": "5e2a45c2a55e70a2b32c03cf",
-                  "itemId": "9",
-                  "itemName": "Sports Watch 4",
-                  "price": 100,
-                  "currency": "EUR"
-                },
-                {
-                  "categories": [
-                    "Watches",
-                    "Sports Watches"
-                  ],
-                  "_id": "5e2a45c2a55e70a2b32c03d0",
-                  "itemId": "2",
-                  "itemName": "Sports Watch 2",
-                  "price": 100,
-                  "currency": "EUR"
-                }
-              ]
-            }
-          },
-          "404": {
-            "description": "404 Not Found"
-          },
-          "500": {
-            "description": "500 Internal Server Error"
-          }
-        }
-      }
-    },
-    "/catalog/item/{itemId}": {
+    "/todo/{itemId}": {
       "get": {
         "operationId": "retrieveItem",
         "summary": "Retrieves an item by its ID",
@@ -296,16 +156,12 @@
             "description": "200 OK",
             "examples": {
               "application/json": {
-                "categories": [
-                  "Watches",
-                  "Sports Watches"
-                ],
-                "_id": "5e2a45c2a55e70a2b32c03d0",
-                "itemId": "2",
-                "itemName": "Sports Watch 2",
-                "price": 100,
-                "currency": "EUR"
-              }
+                "_id": "5e4a9791532dcc000d7cf24f",
+                "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
+                "text": "new todo 1",
+                "completed": false,
+                "__v": 0
+              }              
             }
           },
           "404": {
