@@ -43,7 +43,7 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
         console.log(result)
         return [
             ...state,
-            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean, available: false }
+            { id: result.itemId as string, text: result.text as string, completed: result.completed as boolean, available: true }
         ]   
     })
     // .case(toggleTodo, (state, id) => {
