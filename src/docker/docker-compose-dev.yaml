@@ -14,7 +14,8 @@ services:
   backend:
     image: node:10-jessie
     restart: always
-    command: ["tail", "-f", "/dev/null"]
+    working_dir: /app
+    command: ["npm", "run", "dev"]
     ports:
       - 3000:3000
     volumes:
@@ -23,11 +24,15 @@ services:
   frontend:
     image: node:10-jessie
     restart: always
-    command: ["tail", "-f", "/dev/null"]
+    working_dir: /app
+    command: ["npm", "run-script", "start"]
     ports:
       - 4000:4000
     volumes:
       - ../frontend/todo-frontend:/app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4000
 
   mongo:
     image: mongo:3.4.23-xenial
