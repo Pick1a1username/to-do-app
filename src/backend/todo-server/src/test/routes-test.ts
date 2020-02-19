@@ -48,6 +48,10 @@ describe('/get', function() {
     });
 });
 
+/**
+ * There's no test for PUT since POST and PUT uses the same function. 
+ */
+
 
 describe('/post', function() {
     it('post test(create)', function(done) {
@@ -62,6 +66,28 @@ describe('/post', function() {
             .send(item )
             .end(function(err, response){
                 should.equal(response.status, 201);
+                done();
+        });
+    });
+
+    it('post test(create only with text)', function(done) {
+        let item = {
+            "text": "Buy Happiness",
+        };
+
+        let expectedResponse = {
+            "text": "Buy Happiness",
+            "completed": false,
+        };
+
+        chai.request(expressApp)
+            .post('/todo')
+            .send(item )
+            .end(function(err, response){
+                should.equal(response.status, 201);
+                expect(response.body.itemId).to.match();
+                expect(response.body.text).to.equal(expectedResponse.text);
+                expect(response.body.completed).to.equal(expectedResponse.completed);
                 done();
         });
     });
