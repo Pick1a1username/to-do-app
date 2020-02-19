@@ -26,8 +26,6 @@ describe('/get', function() {
      */
     it('get an specific item', function(done) {
 
-        // let targetItem: IItem = {};
-
         // Get a target item info.
         chai.request(expressApp)
             .get('/todo')
@@ -113,86 +111,6 @@ describe('/post', function() {
             });
     });
 });
-
-
-// describe('/put', function() {
-//     it('put test(create)', function(done) {
-//         let item = {
-//             "itemId": 200,
-//             "itemName": "Sports Watch 10",
-//             "price": 100,
-//             "currency": "USD",
-//             "categories": [
-//                 "Watches",
-//                 "Sports Watches"
-//             ]
-//         };
-    
-//         chai.request(expressApp)
-//             .put('/catalog')
-//             .send(item )
-//             .end(function(err, response){
-//                 should.equal(response.status, 201);
-//                 done();
-//         });
-//     });
-
-//     it('put test(update)', function(done) {
-//         let itemBefore = {
-//             "itemId": 201,
-//             "itemName": "Sports Watch 10",
-//             "price": 100,
-//             "currency": "USD",
-//             "categories": [
-//                 "Watches",
-//                 "Sports Watches"
-//             ]
-//         };
-
-//         let itemAfter = {
-//             "itemId": 201,
-//             "itemName": "Sports Watch 10",
-//             "price": 10000,
-//             "currency": "USD",
-//             "categories": [
-//                 "Watches",
-//                 "Sports Watches"
-//             ]
-//         };
-    
-//         chai.request(expressApp)
-//             .put('/catalog')
-//             .send(itemBefore)
-//             .end(function(err, response){
-//                 should.equal(response.status, 201);
-//                 chai.request(expressApp)
-//                     .put('/catalog')
-//                     .send(itemAfter)
-//                     .end(function(err, response){
-//                         should.equal(response.status, 200);
-//                         expect(response.body).is.an('object');
-//                         expect(response.body.itemId).to.equal(itemAfter.itemId);
-//                         done();
-//                 });
-//         });
-//     });
-
-//     after('clean data', (done) => {
-//         const removeItemForCreate = chai.request(expressApp)
-//             .delete('/catalog/item/200');
-//         const removeItemForUpdate = chai.request(expressApp)
-//             .delete('/catalog/item/201');
-
-//         Promise.all([removeItemForCreate, removeItemForUpdate])
-//             .then( () => {
-//                 done();
-//             })
-//             .catch(error => { 
-//                 console.error(error.message)
-//             });
-//     });
-// });
-
 
 
 describe('/delete', function() {

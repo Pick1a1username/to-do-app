@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pretest": "eslint src/**/*",
+    "test": "mocha -r ts-node/register src/test/routes-test.ts --exit",
+    "linttest": "eslint src/**/*",
     "dev": "nodemon --config nodemon.json ",
     "tsc": "tsc"
   },
