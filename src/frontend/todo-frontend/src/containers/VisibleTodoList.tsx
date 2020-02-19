@@ -42,7 +42,8 @@ type TodoFromDB = {
   text: string,
   completed: boolean
 }
-const mapDispatchToProps = ( dispatch: Dispatch ) => {
+
+export const mapDispatchToProps = ( dispatch: Dispatch ) => {
   return {
     onTodoClick: (todo: Todo) => {
       if (!todo.available) return;

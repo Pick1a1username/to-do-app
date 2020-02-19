@@ -1,7 +1,7 @@
 import { actionCreatorFactory, ActionCreator, Success, Failure  } from 'typescript-fsa';
 
 const actionCreator = actionCreatorFactory()
-
+import { Dispatch } from "redux";
 
 type TodoFromDB = {
   itemId: string,
@@ -62,4 +62,29 @@ export const LoadTodosAsyncActions = {
   startLoadTodos: loadTodos.started,
   failedLoadTodos: loadTodos.failed,
   doneLoadTodos: loadTodos.done
+}
+
+export const loadTodosAsync = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(LoadTodosAsyncActions.startLoadTodos({}))
+    
+    // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
+    return fetch("http://localhost:3000/todo", {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( (response) => {
+        // console.log(response)
+        return response.json()
+      })
+      .then( (todos) => {
+        // console.log(todos)
+        dispatch(LoadTodosAsyncActions.doneLoadTodos({ params: {}, result: todos }))
+      })
+      .catch( (error) => {
+        console.error(error)
+        dispatch(LoadTodosAsyncActions.failedLoadTodos({ params: {}, error: {}}))
+      })
+  }
 }
