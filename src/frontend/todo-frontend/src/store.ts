@@ -1,4 +1,6 @@
-import { combineReducers, createStore, compose } from 'redux'
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
+import thunk from 'redux-thunk';
+
 
 import { todosReducer, todosReducerState } from './reducers/todos'
 import { visibilityFilterReducer } from './reducers/visibilityFilter'
@@ -22,7 +24,7 @@ const store = createStore(
         todosReducer: todosReducer,
         visibilityFilterReducer: visibilityFilterReducer
     }),
-    composeEnhancers()
+    composeEnhancers(applyMiddleware(thunk)),
 )
 
 export default store

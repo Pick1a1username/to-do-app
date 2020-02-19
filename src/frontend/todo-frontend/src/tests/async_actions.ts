@@ -1,9 +1,16 @@
 import configureMockStore from 'redux-mock-store'
 import fetchMock from 'fetch-mock'
 import expect from 'expect' // You can use any testing library
-import * as VisibleTodoList from '../containers/VisibleTodoList'
+import thunk from 'redux-thunk'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
 
-const mockStore = configureMockStore()
+import * as VisibleTodoList from '../containers/VisibleTodoList'
+import { AppState } from '../store'
+
+type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
+
+const mockStore = configureMockStore<AppState, DispatchExts>([thunk]);
 
 
 import * as actions from '../actions'
@@ -34,7 +41,8 @@ describe('async actions', () => {
         completed: false
       }] } }
     ]
-    const store = mockStore({ todosReducer: [] })
+    // const store = mockStore({ todosReducer: [] })
+    const store = mockStore()
     // return store.dispatch(actions.fetchTodos()).then(() => {
     //   // return of async actions
     //   expect(store.getActions()).toEqual(expectedActions)
