@@ -25,7 +25,7 @@ describe('async actions', () => {
     fetchMock.restore()
   })
   it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
-    fetchMock.getOnce('/todo', {
+    fetchMock.getOnce('http://localhost:3000/todo', {
       body: [{
         itemId: "1111",
         text: "do something",
@@ -34,8 +34,8 @@ describe('async actions', () => {
       headers: { 'content-type': 'application/json' }
     })
     const expectedActions = [
-      { type: actions.LoadTodosAsyncActions.startLoadTodos },
-      { type: actions.LoadTodosAsyncActions.doneLoadTodos, body: { params: {}, result: [{
+      { type: actions.LoadTodosAsyncActions.startLoadTodos.type, payload: {} },
+      { type: actions.LoadTodosAsyncActions.doneLoadTodos.type, payload: { params: {}, result: [{
         itemId: "1111",
         text: "do something",
         completed: false
