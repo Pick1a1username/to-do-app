@@ -16,8 +16,6 @@ type TodoFromDB = {
 }
 
 
-let nextTodoId = 0
-
 export interface todosReducerState extends Array<Todo> { }
 
 export const todosReducerInitialState: todosReducerState = []

@@ -21,6 +21,7 @@ class TodoList extends React.Component<Props> {
 
 
   componentDidMount() {
+    console.log('didmount')
     this.props.loadTodos();
   }
 

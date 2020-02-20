@@ -1,7 +1,9 @@
 import { actionCreatorFactory, ActionCreator, Success, Failure  } from 'typescript-fsa';
+import { Dispatch, AnyAction } from "redux";
 
 const actionCreator = actionCreatorFactory()
-import { Dispatch } from "redux";
+
+
 
 type TodoFromDB = {
   itemId: string,
@@ -65,7 +67,7 @@ export const LoadTodosAsyncActions = {
 }
 
 export const loadTodosAsync = () => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(LoadTodosAsyncActions.startLoadTodos({}))
     
     // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api

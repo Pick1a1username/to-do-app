@@ -2,9 +2,12 @@ import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
 
 import { Dispatch } from "redux";
-
+import { AnyAction } from 'redux'
 import { AppState } from "../store";
-import { ToggleTodoAsyncActions, LoadTodosAsyncActions } from '../actions'
+import { ToggleTodoAsyncActions, loadTodosAsync } from '../actions'
+import { ThunkDispatch } from 'redux-thunk'
+
+type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
 
 type Todo = {
   id: string,
@@ -43,7 +46,7 @@ type TodoFromDB = {
   completed: boolean
 }
 
-export const mapDispatchToProps = ( dispatch: Dispatch ) => {
+export const mapDispatchToProps = ( dispatch: DispatchExts ) => {
   return {
     onTodoClick: (todo: Todo) => {
       if (!todo.available) return;
@@ -69,29 +72,10 @@ export const mapDispatchToProps = ( dispatch: Dispatch ) => {
           dispatch(ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} }));
         });
     },
-    loadTodos: () => { 
-      dispatch(LoadTodosAsyncActions.startLoadTodos({}))
-    
-      // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
-      fetch("http://localhost:3000/todo", {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then( (response) => {
-          // console.log(response)
-          return response.json()
-        })
-        .then( (todos) => {
-          // console.log(todos)
-          dispatch(LoadTodosAsyncActions.doneLoadTodos({ params: {}, result: todos }))
-        })
-        .catch( (error) => {
-          console.error(error)
-          dispatch(LoadTodosAsyncActions.failedLoadTodos({ params: {}, error: {}}))
-        })
+    loadTodos: () => {
+      dispatch(loadTodosAsync())
       }
-    }
+  }
 }
 
 
