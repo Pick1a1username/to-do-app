@@ -4,6 +4,13 @@ import { Dispatch, AnyAction } from "redux";
 const actionCreator = actionCreatorFactory()
 
 
+type Todo = {
+  id: string,
+  text: string,
+  completed: boolean,
+  available: boolean,
+}
+
 
 type TodoFromDB = {
   itemId: string,
@@ -38,6 +45,33 @@ export const ToggleTodoAsyncActions = {
   startToggleTodo: toggleTodo.started,
   failedToggleTodo: toggleTodo.failed,
   doneToggleTodo: toggleTodo.done
+}
+
+export const toggleTodoAsync = (todo: Todo) => {
+  return (dispatch: Dispatch<AnyAction>) => {
+    if (!todo.available) return;
+
+    dispatch(ToggleTodoAsyncActions.startToggleTodo(todo.id));
+
+    fetch(`http://localhost:3000/todo/`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        itemId: todo.id,
+        text: todo.text,
+        completed: todo.completed ? false : true
+      })
+    })
+      .then( (response) => response.json() )
+      .then( (data: TodoFromDB) => {
+        dispatch(ToggleTodoAsyncActions.doneToggleTodo({ params: {}, result: data }));
+      })
+      .catch( (error) => {
+        dispatch(ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} }));
+      });
+  }
 }
 
 // export const toggleTodo = actionCreator<number>('TOGGLE_TODO')
