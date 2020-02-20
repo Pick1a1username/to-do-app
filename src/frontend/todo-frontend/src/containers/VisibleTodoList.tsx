@@ -2,9 +2,12 @@ import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
 
 import { Dispatch } from "redux";
-
+import { AnyAction } from 'redux'
 import { AppState } from "../store";
-import { ToggleTodoAsyncActions, LoadTodosAsyncActions } from '../actions'
+import { ToggleTodoAsyncActions, loadTodosAsync, toggleTodoAsync} from '../actions'
+import { ThunkDispatch } from 'redux-thunk'
+
+type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
 
 type Todo = {
   id: string,
@@ -42,55 +45,16 @@ type TodoFromDB = {
   text: string,
   completed: boolean
 }
-const mapDispatchToProps = ( dispatch: Dispatch ) => {
+
+export const mapDispatchToProps = ( dispatch: DispatchExts ) => {
   return {
     onTodoClick: (todo: Todo) => {
-      if (!todo.available) return;
-
-      dispatch(ToggleTodoAsyncActions.startToggleTodo(todo.id));
-
-      fetch(`http://localhost:3000/todo/`, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: "PUT",
-        body: JSON.stringify({
-          itemId: todo.id,
-          text: todo.text,
-          completed: todo.completed ? false : true
-        })
-      })
-        .then( (response) => response.json() )
-        .then( (data: TodoFromDB) => {
-          dispatch(ToggleTodoAsyncActions.doneToggleTodo({ params: {}, result: data }));
-        })
-        .catch( (error) => {
-          dispatch(ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} }));
-        });
+      dispatch(toggleTodoAsync(todo))
     },
-    loadTodos: () => { 
-      dispatch(LoadTodosAsyncActions.startLoadTodos({}))
-    
-      // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
-      fetch("http://localhost:3000/todo", {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then( (response) => {
-          // console.log(response)
-          return response.json()
-        })
-        .then( (todos) => {
-          // console.log(todos)
-          dispatch(LoadTodosAsyncActions.doneLoadTodos({ params: {}, result: todos }))
-        })
-        .catch( (error) => {
-          console.error(error)
-          dispatch(LoadTodosAsyncActions.failedLoadTodos({ params: {}, error: {}}))
-        })
+    loadTodos: () => {
+      dispatch(loadTodosAsync())
       }
-    }
+  }
 }
 
 
