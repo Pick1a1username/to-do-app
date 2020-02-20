@@ -5,7 +5,6 @@ import thunk from 'redux-thunk'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 
-import * as VisibleTodoList from '../containers/VisibleTodoList'
 import { AppState } from '../store'
 
 type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
@@ -24,7 +23,9 @@ describe('async actions', () => {
   afterEach(() => {
     fetchMock.restore()
   })
-  it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
+
+  it('creates doneLoadTodos when fetching todos has been done', () => {
+
     fetchMock.getOnce('http://localhost:3000/todo', {
       body: [{
         itemId: "1111",
@@ -33,6 +34,7 @@ describe('async actions', () => {
       }],
       headers: { 'content-type': 'application/json' }
     })
+
     const expectedActions = [
       { type: actions.LoadTodosAsyncActions.startLoadTodos.type, payload: {} },
       { type: actions.LoadTodosAsyncActions.doneLoadTodos.type, payload: { params: {}, result: [{
@@ -43,12 +45,40 @@ describe('async actions', () => {
     ]
     // const store = mockStore({ todosReducer: [] })
     const store = mockStore()
-    // return store.dispatch(actions.fetchTodos()).then(() => {
-    //   // return of async actions
-    //   expect(store.getActions()).toEqual(expectedActions)
 
     return store.dispatch(actions.loadTodosAsync()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   })
+
+  it('creates doneToggleTodo when toggling a todo has been done', () => {
+    fetchMock.putOnce('http://localhost:3000/todo/', {
+      body: {
+        itemId: "1111",
+        text: "do something",
+        completed: true
+      },
+      headers: { 'content-type': 'application/json' }
+    })
+
+    const expectedActions = [
+      { type: actions.ToggleTodoAsyncActions.startToggleTodo.type, payload: "1111" },
+      { type: actions.ToggleTodoAsyncActions.doneToggleTodo.type, payload: { params: {}, result: {
+        itemId: "1111",
+        text: "do something",
+        completed: true
+      } } }
+    ]
+    // const store = mockStore({ todosReducer: [] })
+    const store = mockStore()
+
+    return store.dispatch(actions.toggleTodoAsync({
+      id: "1111",
+      text: "do something",
+      completed: true,
+      available: true
+    })).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
 })
+});

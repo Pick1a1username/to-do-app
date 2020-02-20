@@ -49,11 +49,11 @@ export const ToggleTodoAsyncActions = {
 
 export const toggleTodoAsync = (todo: Todo) => {
   return (dispatch: Dispatch<AnyAction>) => {
-    if (!todo.available) return;
+    if (!todo.available) return Promise.resolve(dispatch(ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} })));
 
     dispatch(ToggleTodoAsyncActions.startToggleTodo(todo.id));
 
-    fetch(`http://localhost:3000/todo/`, {
+    return fetch(`http://localhost:3000/todo/`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -62,8 +62,8 @@ export const toggleTodoAsync = (todo: Todo) => {
         itemId: todo.id,
         text: todo.text,
         completed: todo.completed ? false : true
+        })
       })
-    })
       .then( (response) => response.json() )
       .then( (data: TodoFromDB) => {
         dispatch(ToggleTodoAsyncActions.doneToggleTodo({ params: {}, result: data }));
@@ -73,8 +73,6 @@ export const toggleTodoAsync = (todo: Todo) => {
       });
   }
 }
-
-// export const toggleTodo = actionCreator<number>('TOGGLE_TODO')
 
 export const setVisibilityFilter = actionCreator<string>('SET_VISIBILITY_FILTER')
 
@@ -108,8 +106,8 @@ export const loadTodosAsync = () => {
     return fetch("http://localhost:3000/todo", {
       headers: {
         'Content-Type': 'application/json'
-      }
-    })
+        }
+      })
       .then( (response) => {
         // console.log(response)
         return response.json()
