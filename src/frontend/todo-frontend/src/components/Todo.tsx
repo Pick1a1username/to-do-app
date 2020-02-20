@@ -3,6 +3,7 @@ import React from 'react'
 // import { VisibleTodoListHandler } from '../containers/VisibleTodoList'
 
 interface OwnProps {
+    index: number,
     text: string,
     completed: boolean,
     available: boolean
