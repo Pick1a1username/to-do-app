@@ -42,14 +42,10 @@ function setup() {
 }
 
 describe('Todo Component', () => {
-  it.skip('should render incompleted todo', () => {
+  it('should render todos', () => {
     const { enzymeWrapper } = setup()
-    // Check text
-    expect(enzymeWrapper.find('li').find('span.text').text()).toBe('Incompleted Todo')
-    // check completed, available
-    expect(enzymeWrapper.find('li').find('span.text').prop('style')).toEqual({"color": "black", "textDecoration": "none"})
-    // check available
-    expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('')
+    
+    expect(enzymeWrapper.find('Todo').length).toEqual(2)
   })
 
 })
