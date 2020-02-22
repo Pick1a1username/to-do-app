@@ -128,9 +128,22 @@ describe("/post", function() {
 
   after("clean data", done => {
     const removeItemForCreate = chai.request(expressApp).delete("/todo/100");
+    const removeItemForCreateWithText = chai
+      .request(expressApp)
+      .get("/todo")
+      .then(response => {
+        const targetItem = response.body.filter(
+          todo => todo.text === "Buy Happiness"
+        )[0];
+        return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
+      });
     const removeItemForUpdate = chai.request(expressApp).delete("/todo/101");
 
-    Promise.all([removeItemForCreate, removeItemForUpdate])
+    Promise.all([
+      removeItemForCreate,
+      removeItemForCreateWithText,
+      removeItemForUpdate
+    ])
       .then(() => {
         done();
       })
