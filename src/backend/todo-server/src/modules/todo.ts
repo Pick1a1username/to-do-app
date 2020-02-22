@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as uuidv1 from "uuid/v1";
 
-import { TodoItem, IItem } from "../model/item";
+import { TodoItem, ItemDocument } from "../model/item";
 
 const contentTypeJson = {
   "Content-Type": "application/json"
@@ -17,7 +17,7 @@ type Item = {
   completed: boolean;
 };
 
-function toItem(body: Item): IItem {
+function toItem(body: Item): ItemDocument {
   return new TodoItem({
     itemId: body.itemId,
     text: body.text,
@@ -42,7 +42,7 @@ export function findAllItems(response: express.Response): null | void {
 }
 
 export function findItemById(
-  itemId: IItem["itemId"],
+  itemId: ItemDocument["itemId"],
   response: express.Response
 ): void {
   // console.log(id);
@@ -81,11 +81,11 @@ export function saveItem(
 
     // Todo
     // Consider concurrency. uuid() may not work expectedly when it is requested concurrently.
-    const newItemData: IItem = {
+    const newItemData: ItemDocument = {
       itemId: uuidv1(),
       text: request.body.text as string,
       completed: false
-    } as IItem;
+    } as ItemDocument;
     console.log(newItemData);
     const newItem = toItem(newItemData);
     newItem.save();
@@ -111,11 +111,11 @@ export function saveItem(
             console.log("Item does not exist. Creating a new one");
             // Todo
             // Consider concurrency. getNewId() may work unexpectedly when it is requested concurrently.
-            const newItemData: IItem = {
+            const newItemData: ItemDocument = {
               itemId: uuidv1(),
               text: request.body.text as string,
               completed: false
-            } as IItem;
+            } as ItemDocument;
             console.log(newItemData);
             const newItem = toItem(newItemData);
             newItem.save();
