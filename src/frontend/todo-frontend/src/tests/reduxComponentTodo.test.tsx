@@ -79,8 +79,8 @@ function unavailableTodo() {
   }
 }
 
-describe('components', () => {
-  describe('Todo', () => {
+
+  describe('Todo Component', () => {
     it('should render incompleted todo', () => {
       const { enzymeWrapper } = incompletedTodo()
       // Check text
@@ -115,4 +115,3 @@ describe('components', () => {
       expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('(Saving...)')
     })
   })
-})
