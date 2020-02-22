@@ -3,6 +3,7 @@ import React from 'react'
 // import { VisibleTodoListHandler } from '../containers/VisibleTodoList'
 
 interface OwnProps {
+    index: number,
     text: string,
     completed: boolean,
     available: boolean
@@ -19,13 +20,14 @@ const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
     onClick={onClick}
   >
     <span
-          style={{
-            textDecoration: completed ? 'line-through' : 'none',
-            color: available ? 'black' : 'red'
-          }}
+      className='text'
+      style={{
+        textDecoration: completed ? 'line-through' : 'none',
+        color: available ? 'black' : 'red'
+      }}
     >{text}
     </span>
-    <span>{available ? '' : '(Saving...)'}</span>
+    <span className='status'>{available ? '' : '(Saving...)'}</span>
   </li>
 )
 
