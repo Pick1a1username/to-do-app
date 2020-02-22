@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 mongoose.connect("mongodb://todo_admin:some_password@mongo/todo");
 
+// https://medium.com/@tomanagle/strongly-typed-models-with-mongoose-and-typescript-7bc2f7197722
 export interface IItem extends mongoose.Document {
   itemId: string;
   text: string;

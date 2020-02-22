@@ -11,6 +11,20 @@ const contentTypePlainText = {
   "Content-Type": "application/json"
 };
 
+type Item = {
+  itemId: string;
+  text: string;
+  completed: boolean;
+};
+
+function toItem(body: Item): IItem {
+  return new TodoItem({
+    itemId: body.itemId,
+    text: body.text,
+    completed: body.completed
+  });
+}
+
 // This function seems to be inappropriate.
 // It should return something, not mutating a passed variable.
 export function findAllItems(response: express.Response): null | void {
@@ -122,7 +136,10 @@ export function saveItem(
   });
 }
 
-export function remove(request: express.Request, response: express.Response) {
+export function remove(
+  request: express.Request,
+  response: express.Response
+): void {
   console.log("Deleting item with id: " + request.params.itemId);
 
   TodoItem.findOne({ itemId: request.params.itemId }, function(error, data) {
@@ -154,13 +171,5 @@ export function remove(request: express.Request, response: express.Response) {
         });
       }
     }
-  });
-}
-
-function toItem(body: IItem) {
-  return new TodoItem({
-    itemId: body.itemId,
-    text: body.text,
-    completed: body.completed
   });
 }
