@@ -7,14 +7,14 @@ import Todo from '../components/Todo'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function incompletedTodo() {
   const dispatchToProps = {
     onTodoClick: jest.fn(),
   }
 
   const stateToProps = {
     id: 1,
-    text: 'Test Todo 1',
+    text: 'Incompleted Todo',
     completed: false,
     available: true
   }
@@ -31,23 +31,88 @@ function setup() {
   }
 }
 
+function completedTodo() {
+  const dispatchToProps = {
+    onTodoClick: jest.fn(),
+  }
+
+  const stateToProps = {
+    id: 1,
+    text: 'Completed Todo',
+    completed: true,
+    available: true
+  }
+
+  const props = {
+    ...dispatchToProps,
+    ...stateToProps
+  }
+
+  const enzymeWrapper = shallow(<Todo index={0} {...stateToProps} onClick={() => dispatchToProps.onTodoClick(stateToProps)} />)
+  return {
+    props,
+    enzymeWrapper
+  }
+}
+
+function unavailableTodo() {
+  const dispatchToProps = {
+    onTodoClick: jest.fn(),
+  }
+
+  const stateToProps = {
+    id: 1,
+    text: 'Unavailable Todo',
+    completed: false,
+    available: false
+  }
+
+  const props = {
+    ...dispatchToProps,
+    ...stateToProps
+  }
+
+  const enzymeWrapper = shallow(<Todo index={0} {...stateToProps} onClick={() => dispatchToProps.onTodoClick(stateToProps)} />)
+  return {
+    props,
+    enzymeWrapper
+  }
+}
+
 describe('components', () => {
   describe('Todo', () => {
-    // it('should render self and subcomponents', () => {
-    //   const { enzymeWrapper } = setup()
-    //   expect(enzymeWrapper.find('header').hasClass('header')).toBe(true)
-    //   expect(enzymeWrapper.find('h1').text()).toBe('todos')
-    //   const todoInputProps = enzymeWrapper.find('TodoTextInput').props()
-    //   expect(todoInputProps.newTodo).toBe(true)
-    //   expect(todoInputProps.placeholder).toEqual('What needs to be done?')
-    // })
-    // it('should call addTodo if length of text is greater than 0', () => {
-    //   const { enzymeWrapper, props } = setup()
-    //   const input = enzymeWrapper.find('TodoTextInput')
-    //   input.props().onSave('')
-    //   expect(props.addTodo.mock.calls.length).toBe(0)
-    //   input.props().onSave('Use Redux')
-    //   expect(props.addTodo.mock.calls.length).toBe(1)
-    // })
+    it('should render incompleted todo', () => {
+      const { enzymeWrapper } = incompletedTodo()
+      // Check text
+      expect(enzymeWrapper.find('li').find('span.text').text()).toBe('Incompleted Todo')
+      // check completed, available
+      expect(enzymeWrapper.find('li').find('span.text').prop('style')).toEqual({"color": "black", "textDecoration": "none"})
+      // check available
+      expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('')
+    })
+
+    it('should render completed todo', () => {
+      const { enzymeWrapper, props } = completedTodo()
+      const todo = enzymeWrapper.find('li')
+
+      // Check text
+      expect(enzymeWrapper.find('li').find('span.text').text()).toBe('Completed Todo')
+      // check completed, available
+      expect(enzymeWrapper.find('li').find('span.text').prop('style')).toEqual({"color": "black", "textDecoration": "line-through"})
+      // check available
+      expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('')
+    })
+
+    it('should render completed todo', () => {
+      const { enzymeWrapper, props } = unavailableTodo()
+      const todo = enzymeWrapper.find('li')
+
+      // Check text
+      expect(enzymeWrapper.find('li').find('span.text').text()).toBe('Unavailable Todo')
+      // check completed, available
+      expect(enzymeWrapper.find('li').find('span.text').prop('style')).toEqual({"color": "red", "textDecoration": "none"})
+      // check available
+      expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('(Saving...)')
+    })
   })
 })
