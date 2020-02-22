@@ -9,9 +9,7 @@
       "get": {
         "operationId": "retrieveAllItems",
         "summary": "Retrieves all items",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "200 OK",
@@ -35,7 +33,7 @@
                   "text": "Go to the gym",
                   "completed": false
                 }
-              ]              
+              ]
             }
           },
           "404": {
@@ -58,9 +56,7 @@
             "description": "Item's description"
           }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "200 if the item has been updated",
@@ -69,7 +65,7 @@
                 "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
                 "text": "new todo 1",
                 "completed": false
-              }              
+              }
             }
           },
           "201": {
@@ -79,7 +75,7 @@
                 "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
                 "text": "new todo 1",
                 "completed": false
-              }              
+              }
             }
           },
           "404": {
@@ -102,9 +98,7 @@
             "description": "Item's description"
           }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "200 if the item has been updated",
@@ -113,7 +107,7 @@
                 "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
                 "text": "new todo 1",
                 "completed": false
-              }              
+              }
             }
           },
           "201": {
@@ -123,7 +117,7 @@
                 "itemId": "ec266f60-518a-11ea-b550-41bbdf88dd3e",
                 "text": "new todo 1",
                 "completed": false
-              }              
+              }
             }
           },
           "404": {
@@ -148,9 +142,7 @@
             "description": "Item's ID"
           }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "200 OK",
@@ -161,7 +153,7 @@
                 "text": "new todo 1",
                 "completed": false,
                 "__v": 0
-              }              
+              }
             }
           },
           "404": {
@@ -184,9 +176,7 @@
             "description": "Item's ID"
           }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "200 OK",
@@ -206,7 +196,5 @@
       }
     }
   },
-  "consumes": [
-    "application/json"
-  ]
+  "consumes": ["application/json"]
 }
