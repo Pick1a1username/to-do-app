@@ -13,7 +13,7 @@ function incompletedTodo() {
   }
 
   const stateToProps = {
-    id: 1,
+    id: "1",
     text: 'Incompleted Todo',
     completed: false,
     available: true
@@ -82,13 +82,25 @@ function unavailableTodo() {
 
   describe('Todo Component', () => {
     it('should render incompleted todo', () => {
-      const { enzymeWrapper } = incompletedTodo()
+      const { enzymeWrapper, props } = incompletedTodo()
       // Check text
       expect(enzymeWrapper.find('li').find('span.text').text()).toBe('Incompleted Todo')
       // check completed, available
       expect(enzymeWrapper.find('li').find('span.text').prop('style')).toEqual({"color": "black", "textDecoration": "none"})
       // check available
       expect(enzymeWrapper.find('li').find('span.status').text()).toEqual('')
+
+      // check onTodoClick
+      const todo = enzymeWrapper.find('li')
+      todo.props().onClick('')
+
+      expect(props.onTodoClick.mock.calls[0][0]).toStrictEqual({
+        id: "1",
+        text: 'Incompleted Todo',
+        completed: false,
+        available: true
+      })
+
     })
 
     it('should render completed todo', () => {
