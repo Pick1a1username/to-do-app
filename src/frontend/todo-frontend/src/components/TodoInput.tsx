@@ -7,7 +7,9 @@ import { AddTodoHandler } from "../containers/AddTodo";
 // type Props = OwnProps & AddTodoHandler;
 type Props = AddTodoHandler;
 
-const TodoInput: React.FC<Props> = ({ addTodo }) => {
+// https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
+// const TodoInput: React.FC<Props> = ({ addTodo }) => {
+const TodoInput: React.FC<Props> = (props: Props) => {
   // https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
   const input = createRef<HTMLInputElement>();
 
@@ -19,7 +21,7 @@ const TodoInput: React.FC<Props> = ({ addTodo }) => {
           if (!input.current!.value.trim()) {
             return;
           }
-          addTodo(input.current!.value);
+          props.addTodo(input.current!.value);
           input.current!.value = "";
         }}
       >

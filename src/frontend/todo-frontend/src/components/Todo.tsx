@@ -15,18 +15,20 @@ export interface VisibleTodoListHandler {
 
 type Props = OwnProps & VisibleTodoListHandler;
 
-const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
-  <li onClick={onClick}>
+// https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
+// const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
+const Todo: React.FC<Props> = (props: Props) => (
+  <li onClick={props.onClick}>
     <span
       className="text"
       style={{
-        textDecoration: completed ? "line-through" : "none",
-        color: available ? "black" : "red"
+        textDecoration: props.completed ? "line-through" : "none",
+        color: props.available ? "black" : "red"
       }}
     >
-      {text}
+      {props.text}
     </span>
-    <span className="status">{available ? "" : "(Saving...)"}</span>
+    <span className="status">{props.available ? "" : "(Saving...)"}</span>
   </li>
 );
 
