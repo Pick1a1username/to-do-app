@@ -1,28 +1,31 @@
-import React from 'react'
+import React from "react";
 
-import { FilterLinkHandler } from '../containers/FilterLink'
+import { FilterLinkHandler } from "../containers/FilterLink";
 
 interface OwnProps {
-    active: boolean,
-    children: string
+  active: boolean;
+  children: string;
 }
 
-type Props = OwnProps & FilterLinkHandler
+type Props = OwnProps & FilterLinkHandler;
 
-const Link: React.FC<Props> = ({ active, children, onClick }) => {
-  if (active) {
-    return <span>{children}</span>
+// https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
+// const Link: React.FC<Props> = ({ active, children, onClick }) => {
+const Link: React.FC<Props> = (props: Props) => {
+  if (props.active) {
+    return <span>{props.children}</span>;
   }
   return (
     <a
       href=""
-      onClick={e => {
-        e.preventDefault()
-        onClick()
+      onClick={(e): void => {
+        e.preventDefault();
+        props.onClick();
       }}
     >
-      {children}
+      {props.children}
     </a>
-  )
-}
-export default Link
+  );
+};
+
+export default Link;

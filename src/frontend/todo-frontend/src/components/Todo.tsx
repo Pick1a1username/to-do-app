@@ -1,34 +1,35 @@
-import React from 'react'
+import React from "react";
 
 // import { VisibleTodoListHandler } from '../containers/VisibleTodoList'
 
 interface OwnProps {
-    index: number,
-    text: string,
-    completed: boolean,
-    available: boolean
+  index: number;
+  text: string;
+  completed: boolean;
+  available: boolean;
 }
 
 export interface VisibleTodoListHandler {
-  onClick(): void
+  onClick(): void;
 }
 
-type Props = OwnProps & VisibleTodoListHandler
+type Props = OwnProps & VisibleTodoListHandler;
 
-const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
-  <li
-    onClick={onClick}
-  >
+// https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
+// const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
+const Todo: React.FC<Props> = (props: Props) => (
+  <li onClick={props.onClick}>
     <span
-      className='text'
+      className="text"
       style={{
-        textDecoration: completed ? 'line-through' : 'none',
-        color: available ? 'black' : 'red'
+        textDecoration: props.completed ? "line-through" : "none",
+        color: props.available ? "black" : "red"
       }}
-    >{text}
+    >
+      {props.text}
     </span>
-    <span className='status'>{available ? '' : '(Saving...)'}</span>
+    <span className="status">{props.available ? "" : "(Saving...)"}</span>
   </li>
-)
+);
 
-export default Todo
+export default Todo;

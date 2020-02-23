@@ -1,34 +1,35 @@
-import React, { createRef } from 'react'
+import React, { createRef } from "react";
 
-import { AddTodoHandler } from '../containers/AddTodo'
+import { AddTodoHandler } from "../containers/AddTodo";
 
-interface OwnProps {}
+// interface OwnProps {}
 
-type Props = OwnProps & AddTodoHandler
+// type Props = OwnProps & AddTodoHandler;
+type Props = AddTodoHandler;
 
-const TodoInput: React.FC<Props> = ({ addTodo }) => {
+// https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
+// const TodoInput: React.FC<Props> = ({ addTodo }) => {
+const TodoInput: React.FC<Props> = (props: Props) => {
   // https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
-  let input = createRef<HTMLInputElement>()
+  const input = createRef<HTMLInputElement>();
 
   return (
     <div>
       <form
-        onSubmit={e => {
-          e.preventDefault()
+        onSubmit={(e): void => {
+          e.preventDefault();
           if (!input.current!.value.trim()) {
-            return
+            return;
           }
-          addTodo(input.current!.value)
-          input.current!.value = ''
+          props.addTodo(input.current!.value);
+          input.current!.value = "";
         }}
       >
-        <input
-          ref={input}
-        />
+        <input ref={input} />
         <button type="submit">Add Todo</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default TodoInput
+export default TodoInput;
