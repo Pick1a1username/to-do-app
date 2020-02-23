@@ -6,7 +6,7 @@ mongoose.connect("mongodb://todo_admin:some_password@mongo/todo");
 
 /**
  * Interface for something...
- * 
+ *
  * Reference: https://medium.com/@tomanagle/strongly-typed-models-with-mongoose-and-typescript-7bc2f7197722
  */
 export interface ItemDocument extends mongoose.Document {

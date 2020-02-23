@@ -38,14 +38,13 @@ function toItem(body: Item): ItemDocument {
   });
 }
 
-
 /**
  * Find all items saved in DB.
- * 
+ *
  * This function seems to be inappropriate.
- * 
+ *
  * It should return something, not mutating a passed variable.
- * 
+ *
  * @param response Variable will be back to the client.
  */
 export function findAllItems(response: express.Response): null | void {
@@ -63,9 +62,9 @@ export function findAllItems(response: express.Response): null | void {
 }
 
 /**
- * Find an item by ID. 
- * 
- * @param itemId The ID 
+ * Find an item by ID.
+ *
+ * @param itemId The ID
  * @param response Variable will be back to the client.
  */
 export function findItemById(
@@ -96,14 +95,13 @@ export function findItemById(
   });
 }
 
-
 /**
  * Save an item.
- * 
+ *
  * Need to be improved.
- * 
- * @param request 
- * @param response 
+ *
+ * @param request
+ * @param response
  */
 export function saveItem(
   request: express.Request,
@@ -173,9 +171,9 @@ export function saveItem(
 
 /**
  * Remove an item.
- * 
- * @param request 
- * @param response 
+ *
+ * @param request
+ * @param response
  */
 export function remove(
   request: express.Request,
