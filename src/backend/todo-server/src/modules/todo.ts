@@ -3,20 +3,33 @@ import * as uuidv1 from "uuid/v1";
 
 import { TodoItem, ItemDocument } from "../model/item";
 
+/**
+ * Variable for setting JSON content type easily.
+ */
 const contentTypeJson = {
   "Content-Type": "application/json"
 };
 
+/**
+ * Variable for setting plain text content type easily.
+ */
 const contentTypePlainText = {
   "Content-Type": "application/json"
 };
 
+/**
+ * Type for item.
+ */
 type Item = {
   itemId: string;
   text: string;
   completed: boolean;
 };
 
+/**
+ * Convert raw data of item to something for Mongo DB.
+ * @param body raw data of item.
+ */
 function toItem(body: Item): ItemDocument {
   return new TodoItem({
     itemId: body.itemId,
@@ -25,8 +38,16 @@ function toItem(body: Item): ItemDocument {
   });
 }
 
-// This function seems to be inappropriate.
-// It should return something, not mutating a passed variable.
+
+/**
+ * Find all items saved in DB.
+ * 
+ * This function seems to be inappropriate.
+ * 
+ * It should return something, not mutating a passed variable.
+ * 
+ * @param response Variable will be back to the client.
+ */
 export function findAllItems(response: express.Response): null | void {
   TodoItem.find({}, (error, result) => {
     if (error) {
@@ -41,6 +62,12 @@ export function findAllItems(response: express.Response): null | void {
   });
 }
 
+/**
+ * Find an item by ID. 
+ * 
+ * @param itemId The ID 
+ * @param response Variable will be back to the client.
+ */
 export function findItemById(
   itemId: ItemDocument["itemId"],
   response: express.Response
@@ -69,7 +96,15 @@ export function findItemById(
   });
 }
 
-// Need to be improved.
+
+/**
+ * Save an item.
+ * 
+ * Need to be improved.
+ * 
+ * @param request 
+ * @param response 
+ */
 export function saveItem(
   request: express.Request,
   response: express.Response
@@ -136,6 +171,12 @@ export function saveItem(
   });
 }
 
+/**
+ * Remove an item.
+ * 
+ * @param request 
+ * @param response 
+ */
 export function remove(
   request: express.Request,
   response: express.Response
