@@ -1,0 +1,27 @@
+dist: trusty
+
+language: node_js
+node_js:
+  - "10"
+
+stages:
+    - script
+
+before_install:
+    - cd src/
+
+script:
+    - docker-compose -f docker/docker-compose-test.yaml up -d
+    - docker exec -it -w /app docker_backend_1 bash -c 'npm run test'
+
+# deploy:
+#     provider: pages
+#     skip_cleanup: true
+#     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+#     repo: pick1a1username/react-calculator-hosting
+#     keep_history: true
+#     local_dir: src/react-calculator/build
+#     target_branch: master
+#     on:
+#         branch: master
+    
