@@ -17,6 +17,7 @@ before_install:
 script:
     - docker build -f db-helper/Dockerfile -t pymongo:0.1 db-helper/
     - docker-compose -f docker/docker-compose-test.yaml up -d
+    - docker exec -it -w /app docker_backend_1 bash -c 'npm install'
     - docker exec -it -w /app docker_backend_1 bash -c 'npm run test'
 
 # deploy:
