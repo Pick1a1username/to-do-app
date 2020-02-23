@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             AddTodoAsyncActions.doneAddTodo({ params: {}, result: data })
           );
         })
-        .catch(error => {
+        .catch((): void => {
           dispatch(
             AddTodoAsyncActions.failedAddTodo({ params: {}, error: {} })
           );

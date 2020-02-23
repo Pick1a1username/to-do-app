@@ -135,8 +135,7 @@ describe("Todo Component", () => {
   });
 
   it("should render completed todo", () => {
-    const { enzymeWrapper, props } = completedTodo();
-    const todo = enzymeWrapper.find("li");
+    const { enzymeWrapper } = completedTodo();
 
     // Check text
     expect(
@@ -162,8 +161,7 @@ describe("Todo Component", () => {
   });
 
   it("should render completed todo", () => {
-    const { enzymeWrapper, props } = unavailableTodo();
-    const todo = enzymeWrapper.find("li");
+    const { enzymeWrapper } = unavailableTodo();
 
     // Check text
     expect(

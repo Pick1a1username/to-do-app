@@ -29,7 +29,7 @@ function todoInputSetup() {
 // Todo: Test TodoInput component.
 describe("TodoInput Component", () => {
   it.skip("should submit new todo", () => {
-    const { enzymeWrapper, props } = todoInputSetup();
+    const { enzymeWrapper } = todoInputSetup();
     // Get input box and add button
     const inputBox = enzymeWrapper
       .find("div")

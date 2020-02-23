@@ -53,7 +53,7 @@ function setupActive() {
 
 describe("Link Component", () => {
   it("should render a link not active", () => {
-    const { enzymeWrapper, props } = setupInactive();
+    const { enzymeWrapper } = setupInactive();
 
     // Check text
     expect(enzymeWrapper.find("a").text()).toBe("All");
@@ -66,7 +66,7 @@ describe("Link Component", () => {
   });
 
   it("should render a link active", () => {
-    const { enzymeWrapper, props } = setupActive();
+    const { enzymeWrapper } = setupActive();
 
     // Check text
     expect(enzymeWrapper.find("span").text()).toBe("All");

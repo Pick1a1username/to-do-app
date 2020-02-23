@@ -1,14 +1,9 @@
 import { connect } from "react-redux";
 import TodoList from "../components/TodoList";
 
-import { Dispatch } from "redux";
 import { AnyAction } from "redux";
 import { AppState } from "../store";
-import {
-  ToggleTodoAsyncActions,
-  loadTodosAsync,
-  toggleTodoAsync
-} from "../actions";
+import { loadTodosAsync, toggleTodoAsync } from "../actions";
 import { ThunkDispatch } from "redux-thunk";
 
 type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
