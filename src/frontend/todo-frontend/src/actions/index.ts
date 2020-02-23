@@ -78,7 +78,7 @@ export const toggleTodoAsync = (todo: Todo) => {
           ToggleTodoAsyncActions.doneToggleTodo({ params: {}, result: data })
         );
       })
-      .catch(error => {
+      .catch((): void => {
         dispatch(
           ToggleTodoAsyncActions.failedToggleTodo({ params: {}, error: {} })
         );

@@ -16,7 +16,7 @@ const Link: React.FC<Props> = ({ active, children, onClick }) => {
   return (
     <a
       href=""
-      onClick={e => {
+      onClick={(e): void => {
         e.preventDefault();
         onClick();
       }}

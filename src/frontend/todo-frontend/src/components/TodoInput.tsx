@@ -14,7 +14,7 @@ const TodoInput: React.FC<Props> = ({ addTodo }) => {
   return (
     <div>
       <form
-        onSubmit={e => {
+        onSubmit={(e): void => {
           e.preventDefault();
           if (!input.current!.value.trim()) {
             return;

@@ -2,7 +2,6 @@ import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import TodoList from "../components/TodoList";
-import Todo from "../components/Todo";
 
 // https://redux.js.org/recipes/writing-tests/
 
