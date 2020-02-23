@@ -2,9 +2,10 @@ import React, { createRef } from "react";
 
 import { AddTodoHandler } from "../containers/AddTodo";
 
-interface OwnProps {}
+// interface OwnProps {}
 
-type Props = OwnProps & AddTodoHandler;
+// type Props = OwnProps & AddTodoHandler;
+type Props = AddTodoHandler;
 
 const TodoInput: React.FC<Props> = ({ addTodo }) => {
   // https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315

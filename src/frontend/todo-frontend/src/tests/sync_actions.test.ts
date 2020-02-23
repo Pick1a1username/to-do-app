@@ -1,11 +1,4 @@
-import configureMockStore from "redux-mock-store";
-import fetchMock from "fetch-mock";
 import expect from "expect"; // You can use any testing library
-import thunk from "redux-thunk";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
-
-import { AppState } from "../store";
 
 import * as actions from "../actions";
 

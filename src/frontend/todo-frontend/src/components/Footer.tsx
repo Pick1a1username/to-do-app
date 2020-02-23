@@ -2,9 +2,10 @@ import React from "react";
 import FilterLink from "../containers/FilterLink";
 import { VisibilityFilters } from "../actions";
 
-interface OwnProps {}
+// interface OwnProps {}
 
-type Props = OwnProps;
+// type Props = OwnProps;
+type Props = {};
 
 const Footer: React.FC<Props> = () => (
   <p>
