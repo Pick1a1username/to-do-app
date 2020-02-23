@@ -4,9 +4,6 @@ language: node_js
 node_js:
   - "10"
 
-stages:
-    - script
-
 before_install:
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -22,15 +19,11 @@ jobs:
               - docker-compose -f docker/docker-compose-test.yaml up -d
               - docker exec -it -w /app docker_backend_1 bash -c 'npm install'
               - docker exec -it -w /app docker_backend_1 bash -c 'npm run test'
+        - stage: Frontend Unit Test
+          script:
+              - docker build -f db-helper/Dockerfile -t pymongo:0.1 db-helper/
+              - docker-compose -f docker/docker-compose-test.yaml up -d
+              - docker exec -it -w /app docker_frontend_1 bash -c 'npm install'
+              - docker exec -it -w /app docker_frontend_1 bash -c 'CI=true npm run test'
 
-# deploy:
-#     provider: pages
-#     skip_cleanup: true
-#     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-#     repo: pick1a1username/react-calculator-hosting
-#     keep_history: true
-#     local_dir: src/react-calculator/build
-#     target_branch: master
-#     on:
-#         branch: master
-    
+              
