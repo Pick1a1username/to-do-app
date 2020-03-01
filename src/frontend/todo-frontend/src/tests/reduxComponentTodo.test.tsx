@@ -126,7 +126,7 @@ describe("Todo Component", () => {
     expect(
       enzymeWrapper
         .find("li")
-        .find("a.deleteButton")
+        .find("button.deleteButton")
         .text()
     ).toBe("Delete");
 
@@ -150,7 +150,7 @@ describe("Todo Component", () => {
     });
 
     // check deleteButton()
-    const todoDeleteButton = enzymeWrapper.find("li").find("a");
+    const todoDeleteButton = enzymeWrapper.find("li").find("button");
     todoDeleteButton.props().onClick("");
 
     expect(props.deleteTodo.mock.calls[0][0]).toEqual("1");
@@ -178,7 +178,7 @@ describe("Todo Component", () => {
     expect(
       enzymeWrapper
         .find("li")
-        .find("a.deleteButton")
+        .find("button.deleteButton")
         .text()
     ).toBe("Delete");
     // check availability
@@ -212,7 +212,7 @@ describe("Todo Component", () => {
     expect(
       enzymeWrapper
         .find("li")
-        .find("a.deleteButton")
+        .find("button.deleteButton")
         .exists()
     ).toEqual(false);
 

@@ -25,13 +25,9 @@ class Todo extends React.Component<Props> {
 
     if (this.props.available) {
       deleteButton = (
-        <a
-          className="deleteButton"
-          href=""
-          onClick={this.props.deleteTodo}
-        >
+        <button className="deleteButton" onClick={this.props.deleteTodo}>
           Delete
-        </a>
+        </button>
       );
     }
 
