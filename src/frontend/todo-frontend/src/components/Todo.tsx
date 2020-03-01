@@ -3,7 +3,7 @@ import React from "react";
 // import { VisibleTodoListHandler } from "../containers/VisibleTodoList";
 
 interface OwnProps {
-  index: number;
+  key: number;
   text: string;
   completed: boolean;
   available: boolean;
@@ -21,16 +21,18 @@ type Props = OwnProps & VisibleTodoListHandler;
 class Todo extends React.Component<Props> {
   render() {
     return (
-      <li onClick={this.props.onClick}>
+      <li>
         <span
           className="text"
           style={{
             textDecoration: this.props.completed ? "line-through" : "none",
             color: this.props.available ? "black" : "red"
           }}
+          onClick={this.props.onClick}
         >
           {this.props.text}
         </span>
+        &nbsp; 
         <a
           href=""
           onClick={(e): void => {
