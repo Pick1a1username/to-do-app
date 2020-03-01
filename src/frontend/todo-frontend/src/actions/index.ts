@@ -139,3 +139,44 @@ export const loadTodosAsync = () => {
       });
   };
 };
+
+const deleteTodo = actionCreator.async<{}, [], {}>("DELETE_TODO");
+
+export interface DeleteTodoAsyncActions {
+  startDeleteTodo: ActionCreator<{}>;
+  failedDeleteTodo: ActionCreator<Failure<{}, {}>>;
+  doneDeleteTodo: ActionCreator<Success<{}, []>>;
+}
+
+export const DeleteTodoAsyncActions = {
+  startDeleteTodo: deleteTodo.started,
+  failedDeleteTodo: deleteTodo.failed,
+  doneDeleteTodo: deleteTodo.done
+};
+
+export const deleteTodoAsync = () => {
+  return (dispatch: Dispatch<AnyAction>) => {
+    dispatch(DeleteTodoAsyncActions.startDeleteTodo({}));
+
+    return fetch("http://localhost:3000/todo/1111", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        dispatch(
+          DeleteTodoAsyncActions.doneDeleteTodo({ params: {}, result: result })
+        );
+      })
+      .catch(error => {
+        console.error(error);
+        dispatch(
+          DeleteTodoAsyncActions.failedDeleteTodo({ params: {}, error: {} })
+        );
+      });
+  };
+};

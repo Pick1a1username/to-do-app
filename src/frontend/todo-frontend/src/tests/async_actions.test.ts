@@ -101,4 +101,32 @@ describe("async actions", () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
+
+  it("deletes a todo", () => {
+    fetchMock.deleteOnce("http://localhost:3000/todo/1111", {
+      status: 200,
+      body: { Status: "Successfully deleted" },
+      headers: { "content-type": "application/json" }
+    });
+
+    const expectedActions = [
+      {
+        type: actions.DeleteTodoAsyncActions.startDeleteTodo.type,
+        payload: {}
+      },
+      {
+        type: actions.DeleteTodoAsyncActions.doneDeleteTodo.type,
+        payload: {
+          params: {},
+          result: { Status: "Successfully deleted" }
+        }
+      }
+    ];
+    // const store = mockStore({ todosReducer: [] })
+    const store = mockStore();
+
+    return store.dispatch(actions.deleteTodoAsync()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 });
