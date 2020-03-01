@@ -28,10 +28,7 @@ class Todo extends React.Component<Props> {
         <a
           className="deleteButton"
           href=""
-          onClick={(e): void => {
-            e.preventDefault();
-            this.props.deleteTodo();
-          }}
+          onClick={this.props.deleteTodo}
         >
           Delete
         </a>

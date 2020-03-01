@@ -121,8 +121,16 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "black", textDecoration: "none" });
-    
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("a.deleteButton")
+        .text()
+    ).toBe("Delete");
+
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
@@ -130,9 +138,9 @@ describe("Todo Component", () => {
         .text()
     ).toEqual("");
 
-    // check onTodoClick
-    const todo = enzymeWrapper.find("li").find("span.text");
-    todo.props().onClick("");
+    // check onTodoClick()
+    const todoText = enzymeWrapper.find("li").find("span.text");
+    todoText.props().onClick("");
 
     expect(props.onTodoClick.mock.calls[0][0]).toStrictEqual({
       id: "1",
@@ -140,6 +148,12 @@ describe("Todo Component", () => {
       completed: false,
       available: true
     });
+
+    // check deleteButton()
+    const todoDeleteButton = enzymeWrapper.find("li").find("a");
+    todoDeleteButton.props().onClick("");
+
+    expect(props.deleteTodo.mock.calls[0][0]).toEqual("1");
   });
 
   it("should render completed todo", () => {
@@ -159,7 +173,15 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "black", textDecoration: "line-through" });
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("a.deleteButton")
+        .text()
+    ).toBe("Delete");
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
@@ -168,7 +190,7 @@ describe("Todo Component", () => {
     ).toEqual("");
   });
 
-  it("should render completed todo", () => {
+  it("should render unavailable todo", () => {
     const { enzymeWrapper } = unavailableTodo();
 
     // Check text
@@ -185,7 +207,16 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "red", textDecoration: "none" });
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("a.deleteButton")
+        .exists()
+    ).toEqual(false);
+
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
