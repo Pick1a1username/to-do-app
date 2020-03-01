@@ -3,16 +3,10 @@ import React from "react";
 import Todo from "./Todo";
 
 import { VisibleTodoListHandler } from "../containers/VisibleTodoList";
-
-type Todo = {
-  id: string;
-  text: string;
-  completed: boolean;
-  available: boolean;
-};
+import * as actions from "../actions";
 
 interface OwnProps {
-  todos: Todo[];
+  todos: actions.Todo[];
 }
 
 type Props = OwnProps & VisibleTodoListHandler;

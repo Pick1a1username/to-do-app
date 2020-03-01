@@ -8,19 +8,19 @@ import { Dispatch, AnyAction } from "redux";
 
 const actionCreator = actionCreatorFactory();
 
-type Todo = {
+export type Todo = {
   id: string;
   text: string;
   completed: boolean;
   available: boolean;
 };
 
-type TodoFromDB = {
+export type TodoFromDB = {
+  _id: string;
   itemId: string;
   text: string;
   completed: boolean;
 };
-// export const addTodo = actionCreator<string>('ADD_TODO')
 
 const addTodo = actionCreator.async<{}, TodoFromDB, {}>("ADD_TODO");
 
