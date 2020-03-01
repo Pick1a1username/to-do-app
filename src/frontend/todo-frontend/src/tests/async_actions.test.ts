@@ -118,14 +118,14 @@ describe("async actions", () => {
         type: actions.DeleteTodoAsyncActions.doneDeleteTodo.type,
         payload: {
           params: {},
-          result: { Status: "Successfully deleted" }
+          result: "1111"
         }
       }
     ];
-    // const store = mockStore({ todosReducer: [] })
+
     const store = mockStore();
 
-    return store.dispatch(actions.deleteTodoAsync()).then(() => {
+    return store.dispatch(actions.deleteTodoAsync('1111')).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
