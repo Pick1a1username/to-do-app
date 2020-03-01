@@ -125,7 +125,7 @@ describe("async actions", () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.deleteTodoAsync('1111')).then(() => {
+    return store.dispatch(actions.deleteTodoAsync("1111")).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });

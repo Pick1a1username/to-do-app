@@ -91,4 +91,4 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
   })
   .case(DeleteTodoAsyncActions.doneDeleteTodo, (state, { result }) => {
     return state.filter(todo => todo.id != result.id);
-  })
+  });

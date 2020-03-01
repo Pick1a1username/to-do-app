@@ -3,7 +3,13 @@ import TodoList from "../components/TodoList";
 
 import { AnyAction } from "redux";
 import { AppState } from "../store";
-import { Todo, TodoFromDB, loadTodosAsync, toggleTodoAsync, deleteTodoAsync } from "../actions";
+import {
+  Todo,
+  TodoFromDB,
+  loadTodosAsync,
+  toggleTodoAsync,
+  deleteTodoAsync
+} from "../actions";
 import { ThunkDispatch } from "redux-thunk";
 
 type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
@@ -25,7 +31,7 @@ const getVisibleTodos = (todos: Todo[], filter: string) => {
 export interface VisibleTodoListHandler {
   onTodoClick(todo: Todo): void;
   loadTodos(): void;
-  deleteTodo(id: Todo['id']): void;
+  deleteTodo(todo: Todo['id']): void;
 }
 
 const mapStateToProps = (appState: AppState) => {
@@ -45,7 +51,7 @@ export const mapDispatchToProps = (dispatch: DispatchExts) => {
     loadTodos: () => {
       dispatch(loadTodosAsync());
     },
-    deleteTodo: (id: Todo['id']) => {
+    deleteTodo: (id: Todo["id"]) => {
       dispatch(deleteTodoAsync(id));
     }
   };

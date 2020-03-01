@@ -25,6 +25,7 @@ class TodoList extends React.Component<Props> {
             key={index}
             {...todo}
             onClick={() => this.props.onTodoClick(todo)}
+            deleteTodo={() => this.props.deleteTodo(todo.id)}
           />
         ))}
       </ul>

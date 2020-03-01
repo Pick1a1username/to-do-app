@@ -154,7 +154,7 @@ export const DeleteTodoAsyncActions = {
   doneDeleteTodo: deleteTodo.done
 };
 
-export const deleteTodoAsync = (id: Todo['id']) => {
+export const deleteTodoAsync = (id: Todo["id"]) => {
   return (dispatch: Dispatch<AnyAction>) => {
     dispatch(DeleteTodoAsyncActions.startDeleteTodo({}));
 
