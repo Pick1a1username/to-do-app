@@ -1,16 +1,10 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import {
+  Todo,
   AddTodoAsyncActions,
   ToggleTodoAsyncActions,
   LoadTodosAsyncActions
 } from "../actions";
-
-type Todo = {
-  id: string;
-  text: string;
-  completed: boolean;
-  available: boolean;
-};
 
 type TodoFromDB = {
   _id: string;

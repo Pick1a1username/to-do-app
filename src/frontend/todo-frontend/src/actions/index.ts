@@ -8,7 +8,7 @@ import { Dispatch, AnyAction } from "redux";
 
 const actionCreator = actionCreatorFactory();
 
-type Todo = {
+export type Todo = {
   id: string;
   text: string;
   completed: boolean;

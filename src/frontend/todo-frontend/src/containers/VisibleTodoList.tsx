@@ -3,17 +3,10 @@ import TodoList from "../components/TodoList";
 
 import { AnyAction } from "redux";
 import { AppState } from "../store";
-import { loadTodosAsync, toggleTodoAsync } from "../actions";
+import { Todo, loadTodosAsync, toggleTodoAsync } from "../actions";
 import { ThunkDispatch } from "redux-thunk";
 
 type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
-
-type Todo = {
-  id: string;
-  text: string;
-  completed: boolean;
-  available: boolean;
-};
 
 const getVisibleTodos = (todos: Todo[], filter: string) => {
   switch (filter) {
