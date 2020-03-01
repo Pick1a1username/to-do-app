@@ -139,3 +139,45 @@ export const loadTodosAsync = () => {
       });
   };
 };
+
+const deleteTodo = actionCreator.async<{}, string, {}>("DELETE_TODO");
+
+export interface DeleteTodoAsyncActions {
+  startDeleteTodo: ActionCreator<{}>;
+  failedDeleteTodo: ActionCreator<Failure<{}, {}>>;
+  doneDeleteTodo: ActionCreator<Success<{}, []>>;
+}
+
+export const DeleteTodoAsyncActions = {
+  startDeleteTodo: deleteTodo.started,
+  failedDeleteTodo: deleteTodo.failed,
+  doneDeleteTodo: deleteTodo.done
+};
+
+export const deleteTodoAsync = (id: Todo["id"]) => {
+  return (dispatch: Dispatch<AnyAction>) => {
+    dispatch(DeleteTodoAsyncActions.startDeleteTodo({}));
+
+    return fetch(`http://localhost:3000/todo/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        // Todo: What if the status returned is not 200?
+        dispatch(
+          DeleteTodoAsyncActions.doneDeleteTodo({ params: {}, result: id })
+        );
+      })
+      .catch(error => {
+        console.error(error);
+        dispatch(
+          DeleteTodoAsyncActions.failedDeleteTodo({ params: {}, error: {} })
+        );
+      });
+  };
+};

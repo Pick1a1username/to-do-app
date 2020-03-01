@@ -4,7 +4,8 @@ import {
   TodoFromDB,
   AddTodoAsyncActions,
   ToggleTodoAsyncActions,
-  LoadTodosAsyncActions
+  LoadTodosAsyncActions,
+  DeleteTodoAsyncActions
 } from "../actions";
 
 export type todosReducerState = Array<Todo>;
@@ -78,6 +79,16 @@ export const todosReducer = reducerWithInitialState(todosReducerInitialState)
       });
       return resultModified;
     }
-
     return state;
+  })
+  .case(DeleteTodoAsyncActions.startDeleteTodo, (state, id) => {
+    return state.map(todo =>
+      todo.id === id ? { ...todo, available: false } : todo
+    );
+  })
+  .case(DeleteTodoAsyncActions.failedDeleteTodo, state => {
+    return state;
+  })
+  .case(DeleteTodoAsyncActions.doneDeleteTodo, (state, { result }) => {
+    return state.filter(todo => todo.id != result);
   });

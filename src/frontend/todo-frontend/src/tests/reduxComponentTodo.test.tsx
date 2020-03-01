@@ -9,7 +9,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 function incompletedTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -26,9 +27,10 @@ function incompletedTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -39,7 +41,8 @@ function incompletedTodo() {
 
 function completedTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -56,9 +59,10 @@ function completedTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -69,7 +73,8 @@ function completedTodo() {
 
 function unavailableTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -86,9 +91,10 @@ function unavailableTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -107,6 +113,7 @@ describe("Todo Component", () => {
         .find("span.text")
         .text()
     ).toBe("Incompleted Todo");
+
     // check completed, available
     expect(
       enzymeWrapper
@@ -114,7 +121,16 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "black", textDecoration: "none" });
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("button.deleteButton")
+        .text()
+    ).toBe("Delete");
+
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
@@ -122,9 +138,9 @@ describe("Todo Component", () => {
         .text()
     ).toEqual("");
 
-    // check onTodoClick
-    const todo = enzymeWrapper.find("li");
-    todo.props().onClick("");
+    // check onTodoClick()
+    const todoText = enzymeWrapper.find("li").find("span.text");
+    todoText.props().onClick("");
 
     expect(props.onTodoClick.mock.calls[0][0]).toStrictEqual({
       id: "1",
@@ -132,6 +148,12 @@ describe("Todo Component", () => {
       completed: false,
       available: true
     });
+
+    // check deleteButton()
+    const todoDeleteButton = enzymeWrapper.find("li").find("button");
+    todoDeleteButton.props().onClick("");
+
+    expect(props.deleteTodo.mock.calls[0][0]).toEqual("1");
   });
 
   it("should render completed todo", () => {
@@ -151,7 +173,15 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "black", textDecoration: "line-through" });
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("button.deleteButton")
+        .text()
+    ).toBe("Delete");
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
@@ -160,7 +190,7 @@ describe("Todo Component", () => {
     ).toEqual("");
   });
 
-  it("should render completed todo", () => {
+  it("should render unavailable todo", () => {
     const { enzymeWrapper } = unavailableTodo();
 
     // Check text
@@ -177,7 +207,16 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "red", textDecoration: "none" });
-    // check available
+
+    // check delete button
+    expect(
+      enzymeWrapper
+        .find("li")
+        .find("button.deleteButton")
+        .exists()
+    ).toEqual(false);
+
+    // check availability
     expect(
       enzymeWrapper
         .find("li")
