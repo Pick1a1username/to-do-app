@@ -21,7 +21,6 @@ export type TodoFromDB = {
   text: string;
   completed: boolean;
 };
-// export const addTodo = actionCreator<string>('ADD_TODO')
 
 const addTodo = actionCreator.async<{}, TodoFromDB, {}>("ADD_TODO");
 

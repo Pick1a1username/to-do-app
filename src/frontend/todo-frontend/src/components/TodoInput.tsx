@@ -2,9 +2,6 @@ import React, { createRef } from "react";
 
 import { AddTodoHandler } from "../containers/AddTodo";
 
-// interface OwnProps {}
-
-// type Props = OwnProps & AddTodoHandler;
 type Props = AddTodoHandler;
 
 // https://www.gitmemory.com/issue/yannickcr/eslint-plugin-react/2353/513009022
