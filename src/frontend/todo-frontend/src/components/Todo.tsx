@@ -20,6 +20,24 @@ type Props = OwnProps & VisibleTodoListHandler;
 // const Todo: React.FC<Props> = ({ text, completed, available, onClick }) => (
 class Todo extends React.Component<Props> {
   render() {
+    // https://reactjs.org/docs/conditional-rendering.html
+    let deleteButton;
+
+    if (this.props.available) {
+      deleteButton = (
+        <a
+          className="deleteButton"
+          href=""
+          onClick={(e): void => {
+            e.preventDefault();
+            this.props.deleteTodo();
+          }}
+        >
+          Delete
+        </a>
+      );
+    }
+
     return (
       <li>
         <span
@@ -32,16 +50,9 @@ class Todo extends React.Component<Props> {
         >
           {this.props.text}
         </span>
-        &nbsp; 
-        <a
-          href=""
-          onClick={(e): void => {
-            e.preventDefault();
-            this.props.deleteTodo();
-          }}
-        >
-          Delete
-        </a>
+        &nbsp;
+        {deleteButton}
+        &nbsp;
         <span className="status">
           {this.props.available ? "" : "(Saving...)"}
         </span>

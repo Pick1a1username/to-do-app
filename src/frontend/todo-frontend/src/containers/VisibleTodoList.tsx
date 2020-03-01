@@ -31,7 +31,7 @@ const getVisibleTodos = (todos: Todo[], filter: string) => {
 export interface VisibleTodoListHandler {
   onTodoClick(todo: Todo): void;
   loadTodos(): void;
-  deleteTodo(todo: Todo['id']): void;
+  deleteTodo(todo: Todo["id"]): void;
 }
 
 const mapStateToProps = (appState: AppState) => {

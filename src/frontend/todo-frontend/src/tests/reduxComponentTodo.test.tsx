@@ -9,7 +9,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 function incompletedTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -26,9 +27,10 @@ function incompletedTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -39,7 +41,8 @@ function incompletedTodo() {
 
 function completedTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -56,9 +59,10 @@ function completedTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -69,7 +73,8 @@ function completedTodo() {
 
 function unavailableTodo() {
   const dispatchToProps = {
-    onTodoClick: jest.fn()
+    onTodoClick: jest.fn(),
+    deleteTodo: jest.fn()
   };
 
   const stateToProps = {
@@ -86,9 +91,10 @@ function unavailableTodo() {
 
   const enzymeWrapper = shallow(
     <Todo
-      index={0}
+      key={0}
       {...stateToProps}
       onClick={() => dispatchToProps.onTodoClick(stateToProps)}
+      deleteTodo={() => dispatchToProps.deleteTodo(stateToProps.id)}
     />
   );
   return {
@@ -107,6 +113,7 @@ describe("Todo Component", () => {
         .find("span.text")
         .text()
     ).toBe("Incompleted Todo");
+
     // check completed, available
     expect(
       enzymeWrapper
@@ -114,6 +121,7 @@ describe("Todo Component", () => {
         .find("span.text")
         .prop("style")
     ).toEqual({ color: "black", textDecoration: "none" });
+    
     // check available
     expect(
       enzymeWrapper
@@ -123,7 +131,7 @@ describe("Todo Component", () => {
     ).toEqual("");
 
     // check onTodoClick
-    const todo = enzymeWrapper.find("li");
+    const todo = enzymeWrapper.find("li").find("span.text");
     todo.props().onClick("");
 
     expect(props.onTodoClick.mock.calls[0][0]).toStrictEqual({
