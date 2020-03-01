@@ -3,7 +3,7 @@ import TodoList from "../components/TodoList";
 
 import { AnyAction } from "redux";
 import { AppState } from "../store";
-import { Todo, loadTodosAsync, toggleTodoAsync } from "../actions";
+import { Todo, TodoFromDB, loadTodosAsync, toggleTodoAsync } from "../actions";
 import { ThunkDispatch } from "redux-thunk";
 
 type DispatchExts = ThunkDispatch<AppState, void, AnyAction>;
@@ -34,11 +34,6 @@ const mapStateToProps = (appState: AppState) => {
       appState.visibilityFilterReducer
     )
   };
-};
-type TodoFromDB = {
-  itemId: string;
-  text: string;
-  completed: boolean;
 };
 
 export const mapDispatchToProps = (dispatch: DispatchExts) => {

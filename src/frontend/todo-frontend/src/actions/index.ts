@@ -15,7 +15,8 @@ export type Todo = {
   available: boolean;
 };
 
-type TodoFromDB = {
+export type TodoFromDB = {
+  _id: string;
   itemId: string;
   text: string;
   completed: boolean;

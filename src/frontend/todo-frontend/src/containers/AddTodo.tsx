@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AddTodoAsyncActions } from "../actions";
+import { TodoFromDB, AddTodoAsyncActions } from "../actions";
 import TodoInput from "../components/TodoInput";
 import { AppState } from "../store";
 
@@ -11,12 +11,6 @@ export interface AddTodoHandler {
 
 const mapStateToProps = (appState: AppState) => {
   return {};
-};
-
-type TodoFromDB = {
-  itemId: string;
-  text: string;
-  completed: boolean;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
