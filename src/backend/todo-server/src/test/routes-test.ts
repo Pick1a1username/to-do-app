@@ -52,32 +52,14 @@ describe("/get", function() {
 /**
  * There's no test for PUT since POST and PUT uses the same function.
  */
-
 describe("/post", function() {
-  it("post test(create)", function(done) {
-    const item = {
-      itemId: 100,
-      text: "Buy Sports Watch 10",
-      completed: false
-    };
-
-    chai
-      .request(expressApp)
-      .post("/todo")
-      .send(item)
-      .end(function(err, response) {
-        should.equal(response.status, 201);
-        done();
-      });
-  });
-
   it("post test(create only with text)", function(done) {
     const item = {
-      text: "Buy Happiness"
+      text: "Buy Happiness For Test"
     };
 
     const expectedResponse = {
-      text: "Buy Happiness",
+      text: "Buy Happiness For Test",
       completed: false
     };
 
@@ -87,63 +69,79 @@ describe("/post", function() {
       .send(item)
       .end(function(err, response) {
         should.equal(response.status, 201);
-        // expect(response.body.itemId).to.match();
+        expect(response.body.itemId).to.match(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+        );
         expect(response.body.text).to.equal(expectedResponse.text);
         expect(response.body.completed).to.equal(expectedResponse.completed);
         done();
       });
   });
 
-  it("post test(update)", function(done) {
-    const itemBefore = {
-      itemId: 101,
-      text: "Buy Lamborghini",
-      completed: false
-    };
+  after("clean data", done => {
+    const removeItemForCreateWithText = chai
+      .request(expressApp)
+      .get("/todo")
+      .then(response => {
+        const targetItem = response.body.filter(
+          todo => todo.text === "Buy Happiness For Test"
+        )[0];
+        return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
+      });
 
-    const itemAfter = {
-      itemId: 101,
-      text: "Buy Lamborghini",
-      completed: true
+    Promise.all([removeItemForCreateWithText])
+      .then(() => {
+        done();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  });
+});
+
+describe("/put", function() {
+  it("put test", function(done) {
+    const newItem = {
+      text: "Buy Lamborghini For Test"
     };
 
     chai
       .request(expressApp)
       .post("/todo")
-      .send(itemBefore)
+      .send(newItem)
       .end(function(err, response) {
         should.equal(response.status, 201);
+
+        const createdItem = response.body;
+        const updatedItem = { ...createdItem, completed: true };
+
         chai
           .request(expressApp)
-          .post("/todo")
-          .send(itemAfter)
+          .put("/todo")
+          .send(updatedItem)
           .end(function(err, response) {
             should.equal(response.status, 200);
             expect(response.body).is.an("object");
-            expect(response.body.itemId).to.equal(itemAfter.itemId);
+            expect(response.body.itemId).to.equal(updatedItem.itemId);
+            expect(response.body.text).to.equal(updatedItem.text);
+            expect(response.body.completed).to.equal(updatedItem.completed);
             done();
           });
       });
   });
 
   after("clean data", done => {
-    const removeItemForCreate = chai.request(expressApp).delete("/todo/100");
     const removeItemForCreateWithText = chai
       .request(expressApp)
       .get("/todo")
       .then(response => {
         const targetItem = response.body.filter(
-          todo => todo.text === "Buy Happiness"
+          todo => todo.text === "Buy Lamborghini For Test"
         )[0];
         return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
       });
-    const removeItemForUpdate = chai.request(expressApp).delete("/todo/101");
 
-    Promise.all([
-      removeItemForCreate,
-      removeItemForCreateWithText,
-      removeItemForUpdate
-    ])
+    Promise.all([removeItemForCreateWithText])
       .then(() => {
         done();
       })
@@ -156,9 +154,7 @@ describe("/post", function() {
 describe("/delete", function() {
   it("delete test", function(done) {
     const item = {
-      itemId: 201,
-      text: "Buy Lamborghini",
-      completed: false
+      text: "Buy Lamborghini"
     };
 
     chai
@@ -167,10 +163,11 @@ describe("/delete", function() {
       .send(item)
       .end(function(err, response) {
         should.equal(201, response.status);
+        const createdItem = response.body;
 
         chai
           .request(expressApp)
-          .delete(`/todo/${item.itemId}`)
+          .delete(`/todo/${createdItem.itemId}`)
           .end(function(err, response) {
             should.equal(200, response.status);
             done();
