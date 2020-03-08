@@ -99,8 +99,8 @@ describe("/post", function() {
   });
 });
 
-describe("/post", function() {
-  it("post test(update)", function(done) {
+describe("/put", function() {
+  it("put test", function(done) {
     const newItem = {
       text: "Buy Lamborghini For Test"
     };
