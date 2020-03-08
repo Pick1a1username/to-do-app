@@ -20,9 +20,9 @@ router.post("/", (request, response) => {
   todo.saveItem(request, response);
 });
 
-// Save or update an item.
+// Update an item.
 router.put("/", (request, response) => {
-  todo.saveItem(request, response);
+  todo.updateItem(request, response);
 });
 
 // Remove an item.
