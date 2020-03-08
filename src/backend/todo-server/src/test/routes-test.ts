@@ -55,11 +55,11 @@ describe("/get", function() {
 describe("/post", function() {
   it("post test(create only with text)", function(done) {
     const item = {
-      text: "Buy Happiness"
+      text: "Buy Happiness For Test"
     };
 
     const expectedResponse = {
-      text: "Buy Happiness",
+      text: "Buy Happiness For Test",
       completed: false
     };
 
@@ -69,7 +69,9 @@ describe("/post", function() {
       .send(item)
       .end(function(err, response) {
         should.equal(response.status, 201);
-        // expect(response.body.itemId).to.match();
+        expect(response.body.itemId).to.match(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+        );
         expect(response.body.text).to.equal(expectedResponse.text);
         expect(response.body.completed).to.equal(expectedResponse.completed);
         done();
@@ -77,23 +79,17 @@ describe("/post", function() {
   });
 
   after("clean data", done => {
-    const removeItemForCreate = chai.request(expressApp).delete("/todo/100");
     const removeItemForCreateWithText = chai
       .request(expressApp)
       .get("/todo")
       .then(response => {
         const targetItem = response.body.filter(
-          todo => todo.text === "Buy Happiness"
+          todo => todo.text === "Buy Happiness For Test"
         )[0];
         return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
       });
-    const removeItemForUpdate = chai.request(expressApp).delete("/todo/101");
 
-    Promise.all([
-      removeItemForCreate,
-      removeItemForCreateWithText,
-      removeItemForUpdate
-    ])
+    Promise.all([removeItemForCreateWithText])
       .then(() => {
         done();
       })
