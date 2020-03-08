@@ -15,7 +15,7 @@ router.get("/:itemId", (request, response) => {
   todo.findItemById(request.params.itemId, response);
 });
 
-// Save or update an item.
+// Save an item.
 router.post("/", (request, response) => {
   todo.saveItem(request, response);
 });
