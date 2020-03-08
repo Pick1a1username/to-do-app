@@ -99,108 +99,57 @@ describe("/post", function() {
   });
 });
 
-/**
- * This part will be used for testing PUT method.
- */
-// describe("/post", function() {
-//   it("post test(create)", function(done) {
-//     const item = {
-//       itemId: 100,
-//       text: "Buy Sports Watch 10",
-//       completed: false
-//     };
+describe("/post", function() {
+  it("post test(update)", function(done) {
+    const newItem = {
+      text: "Buy Lamborghini For Test"
+    };
 
-//     chai
-//       .request(expressApp)
-//       .post("/todo")
-//       .send(item)
-//       .end(function(err, response) {
-//         should.equal(response.status, 201);
-//         done();
-//       });
-//   });
+    chai
+      .request(expressApp)
+      .post("/todo")
+      .send(newItem)
+      .end(function(err, response) {
+        should.equal(response.status, 201);
 
-//   it("post test(create only with text)", function(done) {
-//     const item = {
-//       text: "Buy Happiness"
-//     };
+        const createdItem = response.body;
+        const updatedItem = { ...createdItem, completed: true };
 
-//     const expectedResponse = {
-//       text: "Buy Happiness",
-//       completed: false
-//     };
+        chai
+          .request(expressApp)
+          .put("/todo")
+          .send(updatedItem)
+          .end(function(err, response) {
+            should.equal(response.status, 200);
+            expect(response.body).is.an("object");
+            expect(response.body.itemId).to.equal(updatedItem.itemId);
+            expect(response.body.text).to.equal(updatedItem.text);
+            expect(response.body.completed).to.equal(updatedItem.completed);
+            done();
+          });
+      });
+  });
 
-//     chai
-//       .request(expressApp)
-//       .post("/todo")
-//       .send(item)
-//       .end(function(err, response) {
-//         should.equal(response.status, 201);
-//         // expect(response.body.itemId).to.match();
-//         expect(response.body.text).to.equal(expectedResponse.text);
-//         expect(response.body.completed).to.equal(expectedResponse.completed);
-//         done();
-//       });
-//   });
+  after("clean data", done => {
+    const removeItemForCreateWithText = chai
+      .request(expressApp)
+      .get("/todo")
+      .then(response => {
+        const targetItem = response.body.filter(
+          todo => todo.text === "Buy Lamborghini For Test"
+        )[0];
+        return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
+      });
 
-//   it("post test(update)", function(done) {
-//     const itemBefore = {
-//       itemId: 101,
-//       text: "Buy Lamborghini",
-//       completed: false
-//     };
-
-//     const itemAfter = {
-//       itemId: 101,
-//       text: "Buy Lamborghini",
-//       completed: true
-//     };
-
-//     chai
-//       .request(expressApp)
-//       .post("/todo")
-//       .send(itemBefore)
-//       .end(function(err, response) {
-//         should.equal(response.status, 201);
-//         chai
-//           .request(expressApp)
-//           .post("/todo")
-//           .send(itemAfter)
-//           .end(function(err, response) {
-//             should.equal(response.status, 200);
-//             expect(response.body).is.an("object");
-//             expect(response.body.itemId).to.equal(itemAfter.itemId);
-//             done();
-//           });
-//       });
-//   });
-
-//   after("clean data", done => {
-//     const removeItemForCreate = chai.request(expressApp).delete("/todo/100");
-//     const removeItemForCreateWithText = chai
-//       .request(expressApp)
-//       .get("/todo")
-//       .then(response => {
-//         const targetItem = response.body.filter(
-//           todo => todo.text === "Buy Happiness"
-//         )[0];
-//         return chai.request(expressApp).delete(`/todo/${targetItem.itemId}`);
-//       });
-//     const removeItemForUpdate = chai.request(expressApp).delete("/todo/101");
-
-//     Promise.all([
-//       removeItemForCreate,
-//       removeItemForCreateWithText,
-//       removeItemForUpdate
-//     ])
-//       .then(() => {
-//         done();
-//       })
-//       .catch(error => {
-//         console.error(error.message);
-//       });
-//   });
-// });
+    Promise.all([removeItemForCreateWithText])
+      .then(() => {
+        done();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  });
+});
 
 describe("/delete", function() {
   it("delete test", function(done) {
