@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         headers: {
           "Content-Type": "application/json"
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify({
           text: value
         })
