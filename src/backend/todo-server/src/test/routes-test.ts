@@ -209,9 +209,7 @@ describe("/post", function() {
 describe("/delete", function() {
   it("delete test", function(done) {
     const item = {
-      itemId: 201,
-      text: "Buy Lamborghini",
-      completed: false
+      text: "Buy Lamborghini"
     };
 
     chai
@@ -220,10 +218,11 @@ describe("/delete", function() {
       .send(item)
       .end(function(err, response) {
         should.equal(201, response.status);
+        const createdItem = response.body;
 
         chai
           .request(expressApp)
-          .delete(`/todo/${item.itemId}`)
+          .delete(`/todo/${createdItem.itemId}`)
           .end(function(err, response) {
             should.equal(200, response.status);
             done();
