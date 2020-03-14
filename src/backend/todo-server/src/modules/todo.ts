@@ -14,7 +14,7 @@ const contentTypeJson = {
  * Variable for setting plain text content type easily.
  */
 const contentTypePlainText = {
-  "Content-Type": "application/json"
+  "Content-Type": "text/plain"
 };
 
 /**
@@ -107,64 +107,58 @@ export function saveItem(
   request: express.Request,
   response: express.Response
 ): void {
+  // Todo
+  // Consider concurrency. uuid() may not work expectedly when it is requested concurrently.
+  const newItemData: ItemDocument = {
+    itemId: uuidv1(),
+    text: request.body.text as string,
+    completed: false
+  } as ItemDocument;
+
+  const newItem = toItem(newItemData);
+  newItem.save();
+  response.writeHead(201, contentTypeJson);
+  response.end(JSON.stringify(newItemData));
+  return;
+}
+
+/**
+ * **This function will be used for updating todos.**
+ *
+ * Save an item.
+ *
+ * Need to be improved.
+ *
+ * @param request
+ * @param response
+ */
+export function updateItem(
+  request: express.Request,
+  response: express.Response
+): void {
   const item = toItem(request.body);
 
-  if (!request.body.itemId) {
-    console.log("Item should not exist. Creating a new one");
-
-    // Todo
-    // Consider concurrency. uuid() may not work expectedly when it is requested concurrently.
-    const newItemData: ItemDocument = {
-      itemId: uuidv1(),
-      text: request.body.text as string,
-      completed: false
-    } as ItemDocument;
-    console.log(newItemData);
-    const newItem = toItem(newItemData);
-    newItem.save();
-    response.writeHead(201, contentTypeJson);
-    response.end(JSON.stringify(newItemData));
-    return;
-  }
-  item.save(error => {
-    if (!error) {
-      item.save();
-      response.writeHead(201, contentTypeJson);
-      response.end(JSON.stringify(request.body));
+  TodoItem.findOne({ itemId: item.itemId }, (error, result) => {
+    console.log("Check if such an item exists.");
+    if (error) {
+      console.log(error);
+      response.writeHead(500, contentTypePlainText);
+      response.end("Internal Server Error");
     } else {
-      // console.log(error);
-      TodoItem.findOne({ itemId: item.itemId }, (error, result) => {
-        console.log("Check if such an item exists");
-        if (error) {
-          console.log(error);
-          response.writeHead(500, contentTypePlainText);
-          response.end("Internal Server Error");
-        } else {
-          if (!result) {
-            console.log("Item does not exist. Creating a new one");
-            // Todo
-            // Consider concurrency. getNewId() may work unexpectedly when it is requested concurrently.
-            const newItemData: ItemDocument = {
-              itemId: uuidv1(),
-              text: request.body.text as string,
-              completed: false
-            } as ItemDocument;
-            console.log(newItemData);
-            const newItem = toItem(newItemData);
-            newItem.save();
-            response.writeHead(201, contentTypeJson);
-            response.end(JSON.stringify(newItemData));
-          } else {
-            console.log("Updating existing item");
-            result.itemId = item.itemId;
-            result.text = item.text;
-            result.completed = item.completed;
-            result.save();
-            response.writeHead(200, contentTypeJson);
-            response.end(JSON.stringify(request.body));
-          }
-        }
-      });
+      if (!result) {
+        console.log("Item does not exist.");
+
+        response.writeHead(404, contentTypePlainText);
+        response.end("Not Found");
+      } else {
+        console.log("Updating existing item.");
+        // result.itemId = item.itemId;
+        result.text = item.text;
+        result.completed = item.completed;
+        result.save();
+        response.writeHead(200, contentTypeJson);
+        response.end(JSON.stringify(request.body));
+      }
     }
   });
 }
