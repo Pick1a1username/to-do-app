@@ -22,6 +22,7 @@ jobs:
         - stage: Frontend Unit Test
           script:
               - docker build -f db-helper/Dockerfile -t pymongo:0.1 db-helper/
+              - echo 'REACT_APP_BACKEND_URL=http://localhost:3000/todo' > frontend/todo-frontend/.env.development.local
               - docker-compose -f docker/docker-compose-test.yaml up -d
               - docker exec -it -w /app docker_frontend_1 bash -c 'npm install'
               - docker exec -it -w /app docker_frontend_1 bash -c 'CI=true npm run test'

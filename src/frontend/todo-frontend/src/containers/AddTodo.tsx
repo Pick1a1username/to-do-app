@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     addTodo: (value: string) => {
       dispatch(AddTodoAsyncActions.startAddTodo({}));
 
-      fetch(`http://localhost:3000/todo/`, {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/`, {
         headers: {
           "Content-Type": "application/json"
         },
