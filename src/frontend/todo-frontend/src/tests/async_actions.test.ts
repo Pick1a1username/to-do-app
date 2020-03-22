@@ -23,7 +23,7 @@ describe("async actions", () => {
   });
 
   it("creates doneLoadTodos when fetching todos has been done", () => {
-    fetchMock.getOnce("http://localhost:3000/todo", {
+    fetchMock.getOnce("http://localhost:3000/todo/", {
       body: [
         {
           itemId: "1111",
