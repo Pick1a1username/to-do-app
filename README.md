@@ -37,6 +37,20 @@ $ cd ../
 ```
 
 
+Install the packages for the apps:
+
+```
+(WIP)
+```
+
+
+Create `.env.development.local` for the frontend:
+
+```
+echo 'REACT_APP_BACKEND_URL=http://localhost:3000/todo' > frontend/todo-frontend/.env.development.local
+```
+
+
 Run docker services:
 
 ```
@@ -44,7 +58,7 @@ $ docker-compose -f docker/docker-compose-dev.yaml up -d
 ```
 
 
-Access to the fronend:
+Access to the frontend:
 
 ```
 http://localhost:4000
