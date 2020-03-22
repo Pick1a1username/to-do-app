@@ -61,7 +61,7 @@ export const toggleTodoAsync = (todo: Todo) => {
 
     dispatch(ToggleTodoAsyncActions.startToggleTodo(todo.id));
 
-    return fetch(`http://localhost:3000/todo/`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/`, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -116,7 +116,7 @@ export const loadTodosAsync = () => {
     dispatch(LoadTodosAsyncActions.startLoadTodos({}));
 
     // https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
-    return fetch("http://localhost:3000/todo", {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/`, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -158,7 +158,7 @@ export const deleteTodoAsync = (id: Todo["id"]) => {
   return (dispatch: Dispatch<AnyAction>) => {
     dispatch(DeleteTodoAsyncActions.startDeleteTodo({}));
 
-    return fetch(`http://localhost:3000/todo/${id}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
